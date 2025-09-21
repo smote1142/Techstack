@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Python Programming Course</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .quiz-section {
+            text-align: center;
+            margin-top: 50px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .quiz-btn {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 25px rgba(78, 205, 196, 0.3);
+        }
+
+        .quiz-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(78, 205, 196, 0.5);
+            filter: brightness(1.1);
+        }
+
+        .quiz-btn:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f1419 0%, #1a2332 50%, #2d3748 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+.header h1 {
+    font-size: 3.5rem;
+    background: linear-gradient(45deg, #ffd700, #ff6347, #4169e1);
+    background-clip: text; /* Standard property */
+    -webkit-background-clip: text; /* WebKit-specific for Safari/Chrome */
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+    animation: pythonGlow 2s ease-in-out infinite alternate;
+}
+
+
+        @keyframes pythonGlow {
+            from { filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.3)); }
+            to { filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6)); }
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            color: #cbd5e0;
+            margin-top: 15px;
+        }
+
+        .course-content {
+            display: grid;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .module {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .module:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.2);
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+
+        .module h2 {
+            color: #ffd700;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .module-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #ffd700, #ff6347);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .topic {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid #ffd700;
+            transition: all 0.3s ease;
+        }
+
+        .topic:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(10px);
+        }
+
+        .topic h3 {
+            color: #4169e1;
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+        }
+
+        .topic ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .topic li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #cbd5e0;
+            transition: color 0.3s ease;
+        }
+
+        .topic li:before {
+            content: "🐍";
+            position: absolute;
+            left: 0;
+            font-size: 0.9rem;
+        }
+
+        .topic li:hover {
+            color: #ffffff;
+        }
+
+        .code-example {
+            background: #1a202c;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 1px solid #2d3748;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-example:before {
+            content: "PYTHON";
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 0.7rem;
+            color: #ffd700;
+            opacity: 0.7;
+        }
+
+        .code-example code {
+            color: #e2e8f0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .python-keyword {
+            color: #ff6347;
+            font-weight: bold;
+        }
+
+        .python-string {
+            color: #98d982;
+        }
+
+        .python-comment {
+            color: #718096;
+            font-style: italic;
+        }
+
+        .quiz-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.5);
+            filter: brightness(1.1);
+        }
+
+        .quiz-btn:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: linear-gradient(90deg, #ffd700, #ff6347, #4169e1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            animation: loading 3s ease-in-out infinite;
+        }
+
+        @keyframes loading {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+
+        .floating-shapes {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            width: 120px;
+            height: 120px;
+            top: 15%;
+            left: 15%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 80px;
+            height: 80px;
+            top: 70%;
+            right: 20%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            bottom: 15%;
+            left: 25%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .module {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar"></div>
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>🐍 Complete Python Programming Course</h1>
+            <p>From Beginner to Advanced Python Development</p>
+        </div>
+
+        <div class="course-content">
+            <div class="module">
+                <h2><div class="module-icon">🚀</div>Python Fundamentals</h2>
+                
+                <div class="topic">
+                    <h3>Getting Started with Python</h3>
+                    <ul>
+                        <li>Python Installation and Setup</li>
+                        <li>Python IDE and Text Editors</li>
+                        <li>Running Python Programs</li>
+                        <li>Python Interactive Shell</li>
+                        <li>Virtual Environments</li>
+                    </ul>
+                    <div class="code-example">
+                        <code>
+<span class="python-comment"># Hello World in Python</span><br>
+<span class="python-keyword">print</span>(<span class="python-string">"Hello, World!"</span>)<br><br>
+<span class="python-comment"># Variables and Data Types</span><br>
+name = <span class="python-string">"Python"</span><br>
+age = <span class="python-string">30</span><br>
+is_awesome = <span class="python-keyword">True</span><br>
+<span class="python-keyword">print</span>(<span class="python-string">f"Language: {name}, Age: {age}"</span>)
+                        </code>
+                    </div>
+                </div>
+
+                <div class="topic">
+                    <h3>Python Syntax and Basic Concepts</h3>
+                    <ul>
+                        <li>Variables and Data Types</li>
+                        <li>Numbers, Strings, and Booleans</li>
+                        <li>Comments and Documentation</li>
+                        <li>Input and Output Operations</li>
+                        <li>Python Keywords and Identifiers</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Operators and Expressions</h3>
+                    <ul>
+                        <li>Arithmetic Operators</li>
+                        <li>Comparison and Logical Operators</li>
+                        <li>Assignment Operators</li>
+                        <li>Bitwise Operators</li>
+                        <li>Operator Precedence</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">🔄</div>Control Flow</h2>
+                
+                <div class="topic">
+                    <h3>Conditional Statements</h3>
+                    <ul>
+                        <li>if, elif, and else Statements</li>
+                        <li>Nested Conditional Statements</li>
+                        <li>Ternary Operators</li>
+                        <li>Boolean Logic in Conditions</li>
+                        <li>Multiple Conditions</li>
+                    </ul>
+                    <div class="code-example">
+                        <code>
+<span class="python-comment"># Conditional Statements</span><br>
+score = 85<br><br>
+<span class="python-keyword">if</span> score >= 90:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="python-keyword">print</span>(<span class="python-string">"Grade: A"</span>)<br>
+<span class="python-keyword">elif</span> score >= 80:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="python-keyword">print</span>(<span class="python-string">"Grade: B"</span>)<br>
+<span class="python-keyword">else</span>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="python-keyword">print</span>(<span class="python-string">"Grade: C or below"</span>)
+                        </code>
+                    </div>
+                </div>
+
+                <div class="topic">
+                    <h3>Loops and Iteration</h3>
+                    <ul>
+                        <li>for Loops and range() Function</li>
+                        <li>while Loops</li>
+                        <li>Loop Control Statements (break, continue)</li>
+                        <li>Nested Loops</li>
+                        <li>Loop Optimization Techniques</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Exception Handling</h3>
+                    <ul>
+                        <li>try, except, else, finally</li>
+                        <li>Common Exception Types</li>
+                        <li>Custom Exceptions</li>
+                        <li>Exception Propagation</li>
+                        <li>Best Practices for Error Handling</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">📊</div>Data Structures</h2>
+                
+                <div class="topic">
+                    <h3>Lists and Tuples</h3>
+                    <ul>
+                        <li>Creating and Accessing Lists</li>
+                        <li>List Methods and Operations</li>
+                        <li>List Comprehensions</li>
+                        <li>Tuples and Immutability</li>
+                        <li>Nested Data Structures</li>
+                    </ul>
+                    <div class="code-example">
+                        <code>
+<span class="python-comment"># Lists and List Comprehensions</span><br>
+numbers = [1, 2, 3, 4, 5]<br>
+squares = [x**2 <span class="python-keyword">for</span> x <span class="python-keyword">in</span> numbers]<br>
+<span class="python-keyword">print</span>(squares)  <span class="python-comment"># [1, 4, 9, 16, 25]</span><br><br>
+<span class="python-comment"># Tuples</span><br>
+coordinates = (10, 20)<br>
+x, y = coordinates  <span class="python-comment"># Tuple unpacking</span>
+                        </code>
+                    </div>
+                </div>
+
+                <div class="topic">
+                    <h3>Dictionaries and Sets</h3>
+                    <ul>
+                        <li>Dictionary Creation and Access</li>
+                        <li>Dictionary Methods and Operations</li>
+                        <li>Dictionary Comprehensions</li>
+                        <li>Sets and Set Operations</li>
+                        <li>Frozen Sets</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Strings and String Manipulation</h3>
+                    <ul>
+                        <li>String Methods and Operations</li>
+                        <li>String Formatting and f-strings</li>
+                        <li>Regular Expressions</li>
+                        <li>Unicode and Encoding</li>
+                        <li>String Performance Optimization</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">⚙️</div>Functions and Modules</h2>
+                
+                <div class="topic">
+                    <h3>Function Fundamentals</h3>
+                    <ul>
+                        <li>Defining and Calling Functions</li>
+                        <li>Parameters and Arguments</li>
+                        <li>Return Statements</li>
+                        <li>Default Parameters</li>
+                        <li>Variable-length Arguments (*args, **kwargs)</li>
+                    </ul>
+                    <div class="code-example">
+                        <code>
+<span class="python-comment"># Function with default parameters</span><br>
+<span class="python-keyword">def</span> greet(name, greeting=<span class="python-string">"Hello"</span>):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="python-keyword">return</span> <span class="python-string">f"{greeting}, {name}!"</span><br><br>
+<span class="python-comment"># Function with *args and **kwargs</span><br>
+<span class="python-keyword">def</span> flexible_func(*args, **kwargs):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="python-keyword">print</span>(<span class="python-string">f"Args: {args}"</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="python-keyword">print</span>(<span class="python-string">f"Kwargs: {kwargs}"</span>)
+                        </code>
+                    </div>
+                </div>
+
+                <div class="topic">
+                    <h3>Advanced Function Concepts</h3>
+                    <ul>
+                        <li>Lambda Functions</li>
+                        <li>Higher-order Functions</li>
+                        <li>Decorators and Function Wrapping</li>
+                        <li>Generator Functions and yield</li>
+                        <li>Closures and Scope</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Modules and Packages</h3>
+                    <ul>
+                        <li>Creating and Importing Modules</li>
+                        <li>Standard Library Modules</li>
+                        <li>Package Structure and __init__.py</li>
+                        <li>Module Search Path</li>
+                        <li>Third-party Package Management (pip)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">🏗️</div>Object-Oriented Programming</h2>
+                
+                <div class="topic">
+                    <h3>Classes and Objects</h3>
+                    <ul>
+                        <li>Defining Classes and Creating Objects</li>
+                        <li>Instance Variables and Methods</li>
+                        <li>Constructor (__init__) Method</li>
+                        <li>Class Variables and Methods</li>
+                        <li>Static Methods</li>
+                    </ul>
+                    <div class="code-example">
+                        <code>
+<span class="python-comment"># Class Definition</span><br>
+<span class="python-keyword">class</span> Car:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="python-keyword">def</span> __init__(self, brand, model):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.brand = brand<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.model = model<br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="python-keyword">def</span> start_engine(self):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="python-keyword">return</span> <span class="python-string">f"{self.brand} {self.model} engine started!"</span><br><br>
+<span class="python-comment"># Creating objects</span><br>
+my_car = Car(<span class="python-string">"Toyota"</span>, <span class="python-string">"Camry"</span>)
+                        </code>
+                    </div>
+                </div>
+
+                <div class="topic">
+                    <h3>Inheritance and Polymorphism</h3>
+                    <ul>
+                        <li>Single and Multiple Inheritance</li>
+                        <li>Method Overriding</li>
+                        <li>super() Function</li>
+                        <li>Abstract Base Classes</li>
+                        <li>Polymorphism and Duck Typing</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Advanced OOP Concepts</h3>
+                    <ul>
+                        <li>Encapsulation and Access Modifiers</li>
+                        <li>Property Decorators</li>
+                        <li>Magic Methods (__str__, __len__, etc.)</li>
+                        <li>Operator Overloading</li>
+                        <li>Metaclasses</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">📁</div>File Handling and I/O</h2>
+                
+                <div class="topic">
+                    <h3>File Operations</h3>
+                    <ul>
+                        <li>Opening and Closing Files</li>
+                        <li>Reading from Files</li>
+                        <li>Writing to Files</li>
+                        <li>File Modes and Context Managers</li>
+                        <li>Working with CSV and JSON Files</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Advanced I/O Operations</li>
+                    <ul>
+                        <li>Binary File Handling</li>
+                        <li>File System Operations (os module)</li>
+                        <li>Path Manipulation (pathlib)</li>
+                        <li>Temporary Files and Directories</li>
+                        <li>File Compression and Archives</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">🌐</div>Libraries and Frameworks</h2>
+                
+                <div class="topic">
+                    <h3>Popular Python Libraries</h3>
+                    <ul>
+                        <li>NumPy for Numerical Computing</li>
+                        <li>Pandas for Data Analysis</li>
+                        <li>Matplotlib and Seaborn for Visualization</li>
+                        <li>Requests for HTTP Operations</li>
+                        <li>Beautiful Soup for Web Scraping</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Web Development</h3>
+                    <ul>
+                        <li>Flask Framework Basics</li>
+                        <li>Django Framework Introduction</li>
+                        <li>FastAPI for Modern APIs</li>
+                        <li>Template Engines</li>
+                        <li>Database Integration</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Data Science and Machine Learning</h3>
+                    <ul>
+                        <li>Scikit-learn for Machine Learning</li>
+                        <li>TensorFlow and PyTorch</li>
+                        <li>Jupyter Notebooks</li>
+                        <li>Data Preprocessing</li>
+                        <li>Model Training and Evaluation</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">🔧</div>Advanced Python Topics</h2>
+                
+                <div class="topic">
+                    <h3>Concurrency and Parallelism</h3>
+                    <ul>
+                        <li>Threading and Thread Safety</li>
+                        <li>Multiprocessing</li>
+                        <li>Asyncio and Async/Await</li>
+                        <li>Concurrent.futures</li>
+                        <li>GIL (Global Interpreter Lock)</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Testing and Debugging</h3>
+                    <ul>
+                        <li>Unit Testing with unittest</li>
+                        <li>pytest Framework</li>
+                        <li>Mock Objects and Patching</li>
+                        <li>Debugging Techniques</li>
+                        <li>Code Coverage</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Performance Optimization</h3>
+                    <ul>
+                        <li>Profiling Python Code</li>
+                        <li>Memory Management</li>
+                        <li>Code Optimization Techniques</li>
+                        <li>Cython for Performance</li>
+                        <li>Best Practices for Efficient Code</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+         <div class="quiz-section">
+            <h2 style="margin-bottom: 20px; color: #4ecdc4;">Ready to Test Your Knowledge?</h2>
+            <p style="margin-bottom: 30px; font-size: 1.2rem; color: #b0b0b0;">
+                Challenge yourself with our comprehensive web development quiz covering all the topics above!
+            </p>
+<a href="/python-quiz.html">
+  <button class="quiz-btn">Take Quiz</button>
+</a>
+
+        </div>
+    </div>
+
+    <script>
+        function startQuiz() {
+            alert('🐍 Python Quiz coming soon! This will test your knowledge across all Python programming topics covered in this course.');
+        }
+
+        // Smooth scrolling animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const modules = document.querySelectorAll('.module');
+            
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            modules.forEach(module => {
+                module.style.opacity = '0';
+                module.style.transform = 'translateY(30px)';
+                module.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(module);
+            });
+
+            // Add interactive code examples
+            const codeExamples = document.querySelectorAll('.code-example');
+            codeExamples.forEach(code => {
+                code.addEventListener('click', function() {
+                    navigator.clipboard.writeText(this.textContent);
+                    this.style.background = 'rgba(255, 215, 0, 0.1)';
+                    setTimeout(() => {
+                        this.style.background = '#1a202c';
+                    }, 1000);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

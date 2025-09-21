@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SnehTech | AI Presentation Maker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #111;
+      color: #eee;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 60px 20px 40px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.8rem;
+      margin-bottom: 12px;
+      color: #00ffcc;
+      animation: fadeIn 1s ease-in;
+    }
+
+    .description {
+      text-align: center;
+      font-size: 1.15rem;
+      margin-bottom: 40px;
+      color: #ccc;
+      animation: fadeIn 1.4s ease-in;
+    }
+
+    .slideshow-wrapper {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-grid {
+      display: flex;
+      gap: 30px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 20px;
+      animation: fadeIn 1.6s ease-in;
+    }
+
+    .card-grid::-webkit-scrollbar {
+      height: 10px;
+    }
+
+    .card-grid::-webkit-scrollbar-thumb {
+      background: #00ffcc;
+      border-radius: 10px;
+    }
+
+    .card {
+      scroll-snap-align: center;
+      background: #1e1e1e;
+      padding: 25px;
+      border-radius: 16px;
+      min-width: 300px;
+      box-shadow: 0 12px 24px rgba(0, 255, 200, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: center;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 16px 32px rgba(0, 255, 200, 0.25);
+      background-color: #292929;
+    }
+
+    .card h2 {
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+      color: #00ffd5;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+      color: #ccc;
+    }
+
+    .card a {
+      display: inline-block;
+      padding: 10px 18px;
+      background: linear-gradient(45deg, #00ffcc, #0077ff);
+      color: white;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s ease;
+    }
+
+    .card a:hover {
+      background: linear-gradient(45deg, #00d6b0, #0059d1);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Navbar (same dark design) */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background-color: #000;
+      border-bottom: 2px solid #00ffcc;
+    }
+
+    .nav-logo, .nav-link {
+      color: #00ffcc;
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: bold;
+      margin-right: 15px;
+    }
+
+    .nav-link:hover {
+      text-decoration: underline;
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+
+
+   <nav class="navbar">
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo">Home</a>
+  </div>
+  <div>    <a href="login.html" class="nav-logo">Sign In</a></div>
+</nav>
+
+
+<!-- Page Content -->
+<div class="container">
+  <h1>🎯 AI Presentation Maker</h1>
+  <p class="description">Create stunning presentations in minutes using AI. Swipe through the options below.</p>
+
+  <div class="slideshow-wrapper">
+    <div class="card-grid">
+      <div class="card">
+        <h2>Gamma</h2>
+        <p>Generate sleek, minimal decks using smart AI suggestions. Great for quick, elegant slides.</p>
+        <a href="https://gamma.app" target="_blank">Try Gamma</a>
+      </div>
+      <div class="card">
+        <h2>SlidesAI</h2>
+        <p>Convert your ideas into Google Slides effortlessly with just a prompt. Ideal for professionals.</p>
+        <a href="https://slidesai.io" target="_blank">Use SlidesAI</a>
+      </div>
+      <div class="card">
+        <h2>Canva</h2>
+        <p>Create visually engaging slides with thousands of templates and creative tools built-in.</p>
+        <a href="https://www.canva.com/presentations/" target="_blank">Open Canva</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

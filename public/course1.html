@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechLearn - Online Courses</title>
+    <style>
+        
+    /* Navbar (same dark design) */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background-color: #000;
+      border-bottom: 2px solid #00ffcc;
+    }
+
+    .nav-logo, .nav-link {
+      color: #00ffcc;
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: bold;
+      margin-right: 15px;
+    }
+
+    .nav-link:hover {
+      text-decoration: underline;
+    }
+    /* Profile Dropdown */
+        .profile-dropdown {
+            position: relative;
+            display: inline-block;
+            margin-left: auto;
+        }
+
+        .profile-button {
+            background: linear-gradient(45deg, #00d4ff, #ff00aa);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .profile-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.4);
+        }
+
+        .profile-button::after {
+            content: "▼";
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-button.active::after {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            min-width: 350px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            margin-top: 10px;
+        }
+
+        .dropdown-content.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-header h3 {
+            color: #00d4ff;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .dropdown-header p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        .dropdown-section {
+            padding: 1rem 1.5rem;
+        }
+
+        .dropdown-section h4 {
+            color: #ff00aa;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dropdown-section ul {
+            list-style: none;
+            margin-left: 1rem;
+        }
+
+        .dropdown-section li {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            margin: 0.25rem 0;
+            padding: 0.25rem 0;
+        }
+
+        .dropdown-section .stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-section .stat:last-child {
+            border-bottom: none;
+        }
+
+        .stat-value {
+            color: #00d4ff;
+            font-weight: 600;
+        }
+
+        .logout-button {
+            background: rgba(255, 0, 170, 0.2);
+            color: #ff00aa;
+            border: 1px solid #ff00aa;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .logout-button:hover {
+            background: rgba(255, 0, 170, 0.3);
+            transform: translateY(-2px);
+        }
+
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 2rem 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00d4ff, #ff6b35, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(0, 212, 255, 0.5); }
+            to { text-shadow: 0 0 30px rgba(255, 107, 53, 0.5); }
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #cccccc;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .filter-section {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .filter-btn:hover::before {
+            left: 100%;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: linear-gradient(45deg, #00d4ff, #ff6b35);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .course-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .course-card:hover::before {
+            opacity: 1;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0, 212, 255, 0.2);
+            border-color: rgba(0, 212, 255, 0.5);
+        }
+
+        .course-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #00d4ff, #ff6b35);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .course-card:hover .course-icon {
+            transform: rotate(10deg) scale(1.1);
+        }
+
+        .course-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        .course-instructor {
+            color: #00d4ff;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .course-description {
+            color: #cccccc;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .course-duration,
+        .course-level {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .course-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00ff88;
+            margin-bottom: 1rem;
+        }
+
+        .enroll-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(45deg, #00d4ff, #ff6b35);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .enroll-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .enroll-btn:hover::before {
+            left: 100%;
+        }
+
+        .enroll-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+        }
+
+        .course-page {
+            display: none;
+            min-height: 100vh;
+            padding-top: 100px;
+        }
+
+        .course-page.active {
+            display: block;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-btn:hover {
+            background: linear-gradient(45deg, #00d4ff, #ff6b35);
+            transform: translateY(-2px);
+        }
+
+        .course-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .course-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00d4ff, #ff6b35);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .course-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00d4ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .course-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            margin: 3rem 0;
+        }
+
+        .main-content {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            height: fit-content;
+        }
+
+        .section-title {
+            color: #00d4ff;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .lesson-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem 1.5rem;
+            margin-bottom: 0.8rem;
+            border-radius: 10px;
+            border-left: 3px solid #00d4ff;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .lesson-item:hover {
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .lesson-duration {
+            color: #cccccc;
+            font-size: 0.8rem;
+            margin-left: auto;
+        }
+
+        .start-learning-btn {
+            width: 100%;
+            padding: 1.5rem;
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .start-learning-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .start-learning-btn:hover::before {
+            left: 100%;
+        }
+
+        .start-learning-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.4);
+        }
+
+        .instructor-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .instructor-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.1);
+        }
+
+        .instructor-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #00d4ff, #ff6b35);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .instructor-card:hover .instructor-avatar {
+            transform: scale(1.1);
+        }
+
+        .features-list {
+            list-style: none;
+        }
+
+        .features-list li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .features-list li:hover {
+            transform: translateX(5px);
+            color: #00d4ff;
+        }
+
+        .features-list li::before {
+            content: '✓';
+            color: #00ff88;
+            font-weight: bold;
+        }
+
+        /* Course Link Button */
+        .course-link-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(45deg, #ff00aa, #00d4ff);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            margin-top: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-link-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .course-link-btn:hover::before {
+            left: 100%;
+        }
+
+        .course-link-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 0, 170, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .course-content {
+                grid-template-columns: 1fr;
+            }
+
+            .course-header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Loading animation */
+        .loading {
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+
+
+<nav class="navbar">
+  <div class="nav-left">
+    <a href="authenticated.html" class="nav-logo">Home</a>
+  </div>
+              <div class="profile-dropdown">
+                <button class="profile-button" id="profileBtn">
+                    <span id="profileName">Loading...</span>
+                </button>
+                <div class="dropdown-content" id="dropdownContent">
+                    <div class="dropdown-header">
+                        <h3 id="dropdownName">Loading...</h3>
+                        <p id="dropdownEmail">Loading...</p>
+                    </div>
+                    
+                    
+                    <div class="dropdown-section">
+                        <button class="logout-button" id="logoutBtn">Logout</button>
+                    </div>
+                </div>
+            </div>
+</nav>
+<script>
+        // Profile dropdown functionality
+        const profileBtn = document.getElementById('profileBtn');
+        const dropdownContent = document.getElementById('dropdownContent');
+
+        profileBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            profileBtn.classList.toggle('active');
+            dropdownContent.classList.toggle('show');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!profileBtn.contains(e.target) && !dropdownContent.contains(e.target)) {
+                profileBtn.classList.remove('active');
+                dropdownContent.classList.remove('show');
+            }
+        });
+        </script>
+            <script src="script.js"></script>
+
+    <!-- Home Page -->
+    <div id="homePage" class="container">
+        <div class="hero">
+            <h1>Master New Skills</h1>
+            <p>Join thousands of students learning cutting-edge technology with industry experts. Transform your career with our comprehensive courses - All FREE!</p>
+        </div>
+
+        <div class="filter-section">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-category="all">All Courses</button>
+                <button class="filter-btn" data-category="programming">Programming</button>
+                <button class="filter-btn" data-category="web">Web Development</button>
+                <button class="filter-btn" data-category="mobile">Mobile Dev</button>
+                <button class="filter-btn" data-category="data">Data Science</button>
+                <button class="filter-btn" data-category="design">Design</button>
+            </div>
+        </div>
+
+        <div class="courses-grid loading" id="coursesGrid">
+            <!-- Courses will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Individual Course Pages -->
+    <div id="coursePages">
+        <!-- Course pages will be dynamically generated -->
+    </div>
+
+    <script>
+        const courses = [
+            {
+                id: 1,
+                title: "Complete Web Development Bootcamp",
+                instructor: "Aman Dhattarwal",
+                description: "Master HTML, CSS, JavaScript, React, Node.js, and MongoDB. Build real-world projects and become a full-stack developer.",
+                price: "Free",
+                duration: "40 hours",
+                level: "Beginner",
+                category: "web",
+                icon: "🌐",
+                students: "25,000+",
+                rating: "4.9",
+                courseLink: "courses/web-development.html",
+                curriculum: [
+                    { title: "HTML5 & CSS3 Fundamentals", duration: "4 hours" },
+                    { title: "JavaScript ES6+ Features", duration: "6 hours" },
+                    { title: "React.js Development", duration: "8 hours" },
+                    { title: "Node.js & Express", duration: "6 hours" },
+                    { title: "MongoDB Database", duration: "4 hours" },
+                    { title: "RESTful APIs", duration: "5 hours" },
+                    { title: "Deployment & Hosting", duration: "3 hours" },
+                    { title: "Final Project", duration: "4 hours" }
+                ]
+            },
+            {
+                id: 2,
+                title: "Python Programming Masterclass",
+                instructor: "Shraddha Khapra",
+                description: "Learn Python from basics to advanced concepts. Data structures, algorithms, OOP, and practical projects included.",
+                price: "Free",
+                duration: "35 hours",
+                level: "Beginner",
+                category: "programming",
+                icon: "🐍",
+                students: "30,000+",
+                rating: "4.8",
+                courseLink: "courses/python-programming.html",
+                curriculum: [
+                    { title: "Python Basics & Syntax", duration: "5 hours" },
+                    { title: "Data Structures", duration: "6 hours" },
+                    { title: "Object-Oriented Programming", duration: "5 hours" },
+                    { title: "File Handling", duration: "3 hours" },
+                    { title: "Error Handling", duration: "3 hours" },
+                    { title: "Libraries & Modules", duration: "4 hours" },
+                    { title: "Real-world Projects", duration: "9 hours" }
+                ]
+            },
+            {
+                id: 3,
+                title: "React.js Complete Course",
+                instructor: "Aman Dhattarwal",
+                description: "Build modern, responsive web applications with React. Hooks, Context API, Redux, and advanced patterns covered.",
+                price: "Free",
+                duration: "30 hours",
+                level: "Intermediate",
+                category: "web",
+                icon: "⚛️",
+                students: "20,000+",
+                rating: "4.9",
+                courseLink: "courses/react-complete.html",
+                curriculum: [
+                    { title: "React Fundamentals", duration: "4 hours" },
+                    { title: "Components & JSX", duration: "5 hours" },
+                    { title: "State Management", duration: "4 hours" },
+                    { title: "React Hooks", duration: "5 hours" },
+                    { title: "Context API", duration: "3 hours" },
+                    { title: "Redux Toolkit", duration: "5 hours" },
+                    { title: "Testing & Deployment", duration: "4 hours" }
+                ]
+            },
+            {
+                id: 4,
+                title: "Data Science with Python",
+                instructor: "Shraddha Khapra",
+                description: "Master data analysis, visualization, and machine learning with Python. Pandas, NumPy, Matplotlib, and Scikit-learn.",
+                price: "Free",
+                duration: "50 hours",
+                level: "Intermediate",
+                category: "data",
+                icon: "📊",
+                students: "15,000+",
+                rating: "4.7",
+                courseLink: "courses/data-science-python.html",
+                curriculum: [
+                    { title: "Data Analysis with Pandas", duration: "8 hours" },
+                    { title: "Data Visualization", duration: "6 hours" },
+                    { title: "Statistical Analysis", duration: "7 hours" },
+                    { title: "Machine Learning Basics", duration: "10 hours" },
+                    { title: "Model Evaluation", duration: "5 hours" },
+                    { title: "Real-world Projects", duration: "8 hours" },
+                    { title: "Data Cleaning Techniques", duration: "6 hours" }
+                ]
+            },
+            {
+                id: 5,
+                title: "Android Development with Java",
+                instructor: "Aman Dhattarwal",
+                description: "Create powerful Android apps from scratch. UI/UX design, database integration, and Google Play deployment.",
+                price: "Free",
+                duration: "45 hours",
+                level: "Intermediate",
+                category: "mobile",
+                icon: "📱",
+                students: "18,000+",
+                rating: "4.8",
+                courseLink: "courses/android-development.html",
+                curriculum: [
+                    { title: "Android Studio Setup", duration: "3 hours" },
+                    { title: "Java for Android", duration: "8 hours" },
+                    { title: "UI Components", duration: "7 hours" },
+                    { title: "Activities & Fragments", duration: "6 hours" },
+                    { title: "Database Integration", duration: "5 hours" },
+                    { title: "API Integration", duration: "6 hours" },
+                    { title: "Play Store Publishing", duration: "4 hours" },
+                    { title: "Final Project", duration: "6 hours" }
+                ]
+            },
+            {
+                id: 6,
+                title: "JavaScript Algorithms & Data Structures",
+                instructor: "Shraddha Khapra",
+                description: "Master problem-solving with JavaScript. Arrays, linked lists, trees, graphs, sorting, and searching algorithms.",
+                price: "Free",
+                duration: "38 hours",
+                level: "Advanced",
+                category: "programming",
+                icon: "⚡",
+                students: "12,000+",
+                rating: "4.9",
+                courseLink: "courses/js-algorithms.html",
+                curriculum: [
+                    { title: "Algorithm Complexity", duration: "4 hours" },
+                    { title: "Array Algorithms", duration: "6 hours" },
+                    { title: "Linked Lists", duration: "5 hours" },
+                    { title: "Stacks & Queues", duration: "4 hours" },
+                    { title: "Trees & Graphs", duration: "8 hours" },
+                    { title: "Sorting Algorithms", duration: "6 hours" },
+                    { title: "Dynamic Programming", duration: "5 hours" }
+                ]
+            },
+            {
+                id: 7,
+                title: "UI/UX Design Fundamentals",
+                instructor: "Design Guru",
+                description: "Learn design principles, user research, wireframing, and prototyping. Master Figma and create stunning interfaces.",
+                price: "Free",
+                duration: "25 hours",
+                level: "Beginner",
+                category: "design",
+                icon: "🎨",
+                students: "22,000+",
+                rating: "4.8",
+                courseLink: "courses/ui-ux-design.html",
+                curriculum: [
+                    { title: "Design Principles", duration: "4 hours" },
+                    { title: "User Research", duration: "3 hours" },
+                    { title: "Wireframing", duration: "4 hours" },
+                    { title: "Prototyping", duration: "4 hours" },
+                    { title: "Figma Mastery", duration: "5 hours" },
+                    { title: "User Testing", duration: "3 hours" },
+                    { title: "Portfolio Building", duration: "2 hours" }
+                ]
+            },
+            {
+                id: 8,
+                title: "Node.js Backend Development",
+                instructor: "Aman Dhattarwal",
+                description: "Build scalable backend applications with Node.js, Express, MongoDB, and authentication systems.",
+                price: "Free",
+                duration: "42 hours",
+                level: "Intermediate",
+                category: "web",
+                icon: "🟢",
+                students: "16,000+",
+                rating: "4.8",
+                courseLink: "courses/nodejs-backend.html",
+                curriculum: [
+                    { title: "Node.js Fundamentals", duration: "6 hours" },
+                    { title: "Express.js Framework", duration: "7 hours" },
+                    { title: "Database Design", duration: "5 hours" },
+                    { title: "Authentication & Security", duration: "6 hours" },
+                    { title: "RESTful APIs", duration: "6 hours" },
+                    { title: "Testing & Debugging", duration: "5 hours" },
+                    { title: "Deployment Strategies", duration: "4 hours" },
+                    { title: "Final Project", duration: "3 hours" }
+                ]
+            },
+            {
+                id: 9,
+                title: "Flutter Mobile Development",
+                instructor: "Shraddha Khapra",
+                description: "Create beautiful cross-platform mobile apps with Flutter and Dart. iOS and Android deployment included.",
+                price: "Free",
+                duration: "48 hours",
+                level: "Intermediate",
+                category: "mobile",
+                icon: "💙",
+                students: "14,000+",
+                rating: "4.7",
+                courseLink: "courses/flutter-development.html",
+                curriculum: [
+                    { title: "Dart Programming", duration: "6 hours" },
+                    { title: "Flutter Widgets", duration: "8 hours" },
+                    { title: "State Management", duration: "6 hours" },
+                    { title: "Navigation & Routing", duration: "5 hours" },
+                    { title: "API Integration", duration: "6 hours" },
+                    { title: "Device Features", duration: "5 hours" },
+                    { title: "App Store Deployment", duration: "4 hours" },
+                    { title: "Final Project", duration: "8 hours" }
+                ]
+            },
+            {
+                id: 10,
+                title: "Machine Learning with Python",
+                instructor: "Data Scientist Pro",
+                description: "Dive deep into machine learning algorithms, neural networks, and AI applications with hands-on projects.",
+                price: "Free",
+                duration: "60 hours",
+                level: "Advanced",
+                category: "data",
+                icon: "🤖",
+                students: "10,000+",
+                rating: "4.9",
+                courseLink: "courses/machine-learning.html",
+                curriculum: [
+                    { title: "ML Fundamentals", duration: "8 hours" },
+                    { title: "Supervised Learning", duration: "10 hours" },
+                    { title: "Unsupervised Learning", duration: "8 hours" },
+                    { title: "Neural Networks", duration: "10 hours" },
+                    { title: "Deep Learning", duration: "12 hours" },
+                    { title: "Model Deployment", duration: "6 hours" },
+                    { title: "AI Applications", duration: "6 hours" }
+                ]
+            },
+            {
+                id: 11,
+                title: "DevOps & Cloud Computing",
+                instructor: "Cloud Expert",
+                description: "Master DevOps practices, Docker, Kubernetes, AWS, and CI/CD pipelines for modern software deployment.",
+                price: "Free",
+                duration: "52 hours",
+                level: "Advanced",
+                category: "programming",
+                icon: "☁️",
+                students: "8,000+",
+                rating: "4.8",
+                courseLink: "courses/devops-cloud.html",
+                curriculum: [
+                    { title: "DevOps Principles", duration: "6 hours" },
+                    { title: "Docker Containers", duration: "8 hours" },
+                    { title: "Kubernetes Orchestration", duration: "10 hours" },
+                    { title: "AWS Services", duration: "12 hours" },
+                    { title: "CI/CD Pipelines", duration: "8 hours" },
+                    { title: "Infrastructure as Code", duration: "5 hours" },
+                    { title: "Monitoring & Logging", duration: "3 hours" }
+                ]
+            },
+            {
+                id: 12,
+                title: "Cybersecurity Fundamentals",
+                instructor: "Security Specialist",
+                description: "Learn ethical hacking, network security, encryption, and protect systems from cyber threats.",
+                price: "Free",
+                duration: "36 hours",
+                level: "Intermediate",
+                category: "programming",
+                icon: "🔒",
+                students: "11,000+",
+                rating: "4.7",
+                courseLink: "courses/cybersecurity.html",
+                curriculum: [
+                    { title: "Security Fundamentals", duration: "5 hours" },
+                    { title: "Network Security", duration: "6 hours" },
+                    { title: "Ethical Hacking", duration: "7 hours" },
+                    { title: "Encryption Techniques", duration: "5 hours" },
+                    { title: "Vulnerability Assessment", duration: "6 hours" },
+                    { title: "Incident Response", duration: "4 hours" },
+                    { title: "Security Best Practices", duration: "3 hours" }
+                ]
+            }
+        ];
+
+        let currentPage = 'home';
+
+        // Initialize page - show all courses immediately
+        document.addEventListener('DOMContentLoaded', function() {
+            renderCourses(courses);
+            setupProfileDropdown();
+            setupFilterButtons();
+        });
+
+        function renderCourses(coursesToRender = courses) {
+            const coursesGrid = document.getElementById('coursesGrid');
+            coursesGrid.innerHTML = '';
+
+            coursesToRender.forEach((course, index) => {
+                const courseCard = document.createElement('div');
+                courseCard.className = 'course-card loading';
+                courseCard.style.animationDelay = `${index * 0.1}s`;
+                courseCard.innerHTML = `
+                    <div class="course-icon">${course.icon}</div>
+                    <h3 class="course-title">${course.title}</h3>
+                    <p class="course-instructor">by ${course.instructor}</p>
+                    <p class="course-description">${course.description}</p>
+                    <div class="course-meta">
+                        <span class="course-duration">${course.duration}</span>
+                        <span class="course-level">${course.level}</span>
+                    </div>
+                    <div class="course-price">${course.price}</div>
+                    <button class="enroll-btn" onclick="showCoursePage(${course.id})">View Syllabus</button>
+                `;
+                coursesGrid.appendChild(courseCard);
+            });
+        }
+
+        function generateCoursePage(course) {
+            const totalLessons = course.curriculum.length;
+            const instructorInitial = course.instructor.charAt(0);
+            
+            return `
+                <div id="coursePage${course.id}" class="course-page container">
+                    <button class="back-btn" onclick="showHomePage()">
+                        ← Back to Courses
+                    </button>
+                    
+                    <div class="course-header">
+                        <h1>${course.title}</h1>
+                        <p style="font-size: 1.2rem; color: #cccccc; max-width: 800px; margin: 0 auto;">${course.description}</p>
+                    </div>
+
+                    <div class="course-stats">
+                        <div class="stat-card">
+                            <div class="stat-number">${course.students}</div>
+                            <div>Students Enrolled</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">${course.rating}⭐</div>
+                            <div>Course Rating</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">${course.duration}</div>
+                            <div>Total Duration</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">${totalLessons}</div>
+                            <div>Total Lessons</div>
+                        </div>
+                    </div>
+
+                    <div class="course-content">
+                        <div class="main-content">
+                            <h2 class="section-title">📚 Course Curriculum</h2>
+                            <div class="lessons-container">
+                                ${course.curriculum.map((lesson, index) => `
+                                    <div class="lesson-item">
+                                        <span>Lesson ${index + 1}: ${lesson.title}</span>
+                                        <span class="lesson-duration">${lesson.duration}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+
+                            <h2 class="section-title" style="margin-top: 3rem;">📋 What You'll Learn</h2>
+                            <ul class="features-list">
+                                ${course.curriculum.slice(0, 6).map(item => `<li>${item.title}</li>`).join('')}
+                            </ul>
+
+                            <h2 class="section-title" style="margin-top: 3rem;">🎯 Course Requirements</h2>
+                            <ul class="features-list">
+                                <li>Basic computer knowledge</li>
+                                <li>Enthusiasm to learn</li>
+                                <li>Internet connection</li>
+                                <li>No prior experience required</li>
+                            </ul>
+                        </div>
+
+                        <div class="sidebar">
+                            <button class="start-learning-btn" onclick="startLearning('${course.courseLink}')">
+                                🚀 Start Learning Now
+                            </button>
+                            
+                        
+                            <div class="instructor-card">
+                                <div class="instructor-avatar">${instructorInitial}</div>
+                                <h3 style="margin-bottom: 0.5rem;">${course.instructor}</h3>
+                                <p style="color: #cccccc; font-size: 0.9rem;">Expert Instructor</p>
+                            </div>
+
+                            <h3 style="color: #00d4ff; margin-bottom: 1rem;">✨ Course Features</h3>
+                            <ul class="features-list">
+                                <li>Lifetime Access</li>
+                                <li>Mobile & Desktop</li>
+                                <li>Certificate of Completion</li>
+                                <li>30 Day Money Back Guarantee</li>
+                                <li>Direct Instructor Support</li>
+                                <li>Downloadable Resources</li>
+                            </ul>
+
+                            <h3 style="color: #00d4ff; margin: 2rem 0 1rem;">📊 Course Info</h3>
+                            <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 10px;">
+                                <p><strong>Level:</strong> ${course.level}</p>
+                                <p><strong>Duration:</strong> ${course.duration}</p>
+                                <p><strong>Language:</strong> English</p>
+                                <p><strong>Price:</strong> <span style="color: #00ff88;">${course.price}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showCoursePage(courseId) {
+            const course = courses.find(c => c.id === courseId);
+            
+            // Hide home page
+            document.getElementById('homePage').style.display = 'none';
+            
+            // Hide all course pages
+            document.querySelectorAll('.course-page').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Check if course page already exists
+            let coursePage = document.getElementById(`coursePage${courseId}`);
+            if (!coursePage) {
+                // Create new course page
+                const coursePageHTML = generateCoursePage(course);
+                document.getElementById('coursePages').innerHTML += coursePageHTML;
+                coursePage = document.getElementById(`coursePage${courseId}`);
+            }
+
+            // Show the specific course page
+            coursePage.classList.add('active');
+            currentPage = `course${courseId}`;
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        function showHomePage() {
+            // Hide all course pages
+            document.querySelectorAll('.course-page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show home page
+            document.getElementById('homePage').style.display = 'block';
+            currentPage = 'home';
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Fixed startLearning function
+        function startLearning(courseLink) {
+            // Show a notification that the course is starting
+            alert('Redirecting to course content...');
+            
+            // Try to navigate to the course page
+            try {
+                // For same-origin navigation
+                window.location.href = courseLink;
+            } catch (error) {
+                // If navigation fails, show alternative message
+                alert('Course content will be available soon! Please check back later.');
+                console.log('Course link:', courseLink);
+            }
+        }
+
+        function setupProfileDropdown() {
+            // Profile dropdown setup would go here
+            // This function was referenced in the original code
+        }
+
+        function setupFilterButtons() {
+            // Filter functionality
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    const category = btn.dataset.category;
+                    const filteredCourses = category === 'all' 
+                        ? courses 
+                        : courses.filter(course => course.category === category);
+                    
+                    renderCourses(filteredCourses);
+                });
+            });
+        }
+
+        // Add smooth scroll for better UX
+        document.addEventListener('click', function(e) {
+            if (e.target.matches('a[href^="#"]')) {
+                e.preventDefault();
+                const target = document.querySelector(e.target.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>

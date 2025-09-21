@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Web Development Course</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+      .header h1 {
+    font-size: 3.5rem;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+    background-clip: text;                /* Standard property */
+    -webkit-background-clip: text;        /* WebKit-specific for Chrome/Safari */
+    -webkit-text-fill-color: transparent; /* Makes gradient visible in text */
+    margin-bottom: 10px;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 5px rgba(78, 205, 196, 0.3)); }
+            to { filter: drop-shadow(0 0 20px rgba(78, 205, 196, 0.6)); }
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            color: #b0b0b0;
+            margin-top: 15px;
+        }
+
+        .course-content {
+            display: grid;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .module {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .module:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(78, 205, 196, 0.2);
+            border-color: rgba(78, 205, 196, 0.3);
+        }
+
+        .module h2 {
+            color: #4ecdc4;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .module-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .topic {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid #4ecdc4;
+            transition: all 0.3s ease;
+        }
+
+        .topic:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(10px);
+        }
+
+        .topic h3 {
+            color: #45b7d1;
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+        }
+
+        .topic ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .topic li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #c0c0c0;
+            transition: color 0.3s ease;
+        }
+
+        .topic li:before {
+            content: "▶";
+            position: absolute;
+            left: 0;
+            color: #4ecdc4;
+            font-size: 0.8rem;
+        }
+
+        .topic li:hover {
+            color: #ffffff;
+        }
+
+        .code-example {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 1px solid #333;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-example:before {
+            content: "CODE";
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 0.7rem;
+            color: #4ecdc4;
+            opacity: 0.7;
+        }
+
+        .code-example code {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .quiz-section {
+            text-align: center;
+            margin-top: 50px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .quiz-btn {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 25px rgba(78, 205, 196, 0.3);
+        }
+
+        .quiz-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(78, 205, 196, 0.5);
+            filter: brightness(1.1);
+        }
+
+        .quiz-btn:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            animation: loading 3s ease-in-out infinite;
+        }
+
+        @keyframes loading {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+
+        .floating-shapes {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(78, 205, 196, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .module {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar"></div>
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>🌐 Complete Web Development Course</h1>
+            <p>Master Modern Web Development from Frontend to Backend</p>
+        </div>
+
+        <div class="course-content">
+            <div class="module">
+                <h2><div class="module-icon">🏗️</div>HTML Fundamentals</h2>
+                
+                <div class="topic">
+                    <h3>HTML Basics & Structure</h3>
+                    <ul>
+                        <li>HTML Document Structure</li>
+                        <li>DOCTYPE Declaration</li>
+                        <li>Head and Body Elements</li>
+                        <li>Meta Tags and SEO</li>
+                        <li>HTML5 Semantic Elements</li>
+                    </ul>
+                    <div class="code-example">
+                        <code>
+&lt;!DOCTYPE html&gt;<br>
+&lt;html lang="en"&gt;<br>
+&lt;head&gt;<br>
+&nbsp;&nbsp;&lt;meta charset="UTF-8"&gt;<br>
+&nbsp;&nbsp;&lt;title&gt;My Website&lt;/title&gt;<br>
+&lt;/head&gt;<br>
+&lt;body&gt;<br>
+&nbsp;&nbsp;&lt;header&gt;&lt;h1&gt;Welcome&lt;/h1&gt;&lt;/header&gt;<br>
+&nbsp;&nbsp;&lt;main&gt;&lt;p&gt;Content here&lt;/p&gt;&lt;/main&gt;<br>
+&lt;/body&gt;<br>
+&lt;/html&gt;
+                        </code>
+                    </div>
+                </div>
+
+                <div class="topic">
+                    <h3>HTML Elements & Attributes</h3>
+                    <ul>
+                        <li>Text Elements (h1-h6, p, span, div)</li>
+                        <li>Links and Navigation</li>
+                        <li>Images and Media</li>
+                        <li>Lists (ordered, unordered, definition)</li>
+                        <li>Tables and Forms</li>
+                        <li>Input Types and Validation</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>HTML5 Advanced Features</h3>
+                    <ul>
+                        <li>Canvas and SVG</li>
+                        <li>Audio and Video Elements</li>
+                        <li>Local Storage</li>
+                        <li>Geolocation API</li>
+                        <li>Web Workers</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">🎨</div>CSS Mastery</h2>
+                
+                <div class="topic">
+                    <h3>CSS Fundamentals</h3>
+                    <ul>
+                        <li>CSS Syntax and Selectors</li>
+                        <li>Box Model and Layout</li>
+                        <li>Colors, Fonts, and Typography</li>
+                        <li>CSS Units and Measurements</li>
+                        <li>Positioning and Display</li>
+                    </ul>
+                    <div class="code-example">
+                        <code>
+.container {<br>
+&nbsp;&nbsp;max-width: 1200px;<br>
+&nbsp;&nbsp;margin: 0 auto;<br>
+&nbsp;&nbsp;padding: 20px;<br>
+&nbsp;&nbsp;display: flex;<br>
+&nbsp;&nbsp;gap: 20px;<br>
+}
+                        </code>
+                    </div>
+                </div>
+
+                <div class="topic">
+                    <h3>Advanced CSS</h3>
+                    <ul>
+                        <li>Flexbox and CSS Grid</li>
+                        <li>CSS Transitions and Animations</li>
+                        <li>Responsive Design & Media Queries</li>
+                        <li>CSS Variables and Custom Properties</li>
+                        <li>Pseudo-classes and Pseudo-elements</li>
+                        <li>CSS Preprocessors (Sass, Less)</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Modern CSS Features</h3>
+                    <ul>
+                        <li>CSS-in-JS Solutions</li>
+                        <li>CSS Modules</li>
+                        <li>Styled Components</li>
+                        <li>CSS Framework Integration</li>
+                        <li>Performance Optimization</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">⚡</div>JavaScript Programming</h2>
+                
+                <div class="topic">
+                    <h3>JavaScript Basics</h3>
+                    <ul>
+                        <li>Variables, Data Types, and Operators</li>
+                        <li>Control Structures (if/else, loops)</li>
+                        <li>Functions and Scope</li>
+                        <li>Objects and Arrays</li>
+                        <li>Error Handling</li>
+                    </ul>
+                    <div class="code-example">
+                        <code>
+const fetchData = async (url) => {<br>
+&nbsp;&nbsp;try {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;const response = await fetch(url);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;const data = await response.json();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return data;<br>
+&nbsp;&nbsp;} catch (error) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;console.error('Error:', error);<br>
+&nbsp;&nbsp;}<br>
+};
+                        </code>
+                    </div>
+                </div>
+
+                <div class="topic">
+                    <h3>DOM Manipulation</h3>
+                    <ul>
+                        <li>Selecting and Modifying Elements</li>
+                        <li>Event Handling</li>
+                        <li>Creating Dynamic Content</li>
+                        <li>Form Validation</li>
+                        <li>Browser APIs</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Modern JavaScript</h3>
+                    <ul>
+                        <li>ES6+ Features (Arrow Functions, Classes)</li>
+                        <li>Promises and Async/Await</li>
+                        <li>Modules and Import/Export</li>
+                        <li>Destructuring and Spread Operator</li>
+                        <li>Template Literals</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">🚀</div>Frontend Frameworks</h2>
+                
+                <div class="topic">
+                    <h3>React.js</h3>
+                    <ul>
+                        <li>Components and JSX</li>
+                        <li>State Management</li>
+                        <li>Props and Component Communication</li>
+                        <li>Hooks (useState, useEffect, Custom Hooks)</li>
+                        <li>Context API and Redux</li>
+                        <li>React Router</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Vue.js</h3>
+                    <ul>
+                        <li>Vue Instance and Templates</li>
+                        <li>Directives and Data Binding</li>
+                        <li>Components and Props</li>
+                        <li>Vuex State Management</li>
+                        <li>Vue Router</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Angular</h3>
+                    <ul>
+                        <li>Components and Services</li>
+                        <li>Dependency Injection</li>
+                        <li>TypeScript Integration</li>
+                        <li>RxJS and Observables</li>
+                        <li>Angular CLI and Testing</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">⚙️</div>Backend Development</h2>
+                
+                <div class="topic">
+                    <h3>Node.js & Express</h3>
+                    <ul>
+                        <li>Server Setup and Routing</li>
+                        <li>Middleware and Authentication</li>
+                        <li>RESTful API Development</li>
+                        <li>Database Integration</li>
+                        <li>File Handling and Security</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Database Management</h3>
+                    <ul>
+                        <li>SQL Databases (MySQL, PostgreSQL)</li>
+                        <li>NoSQL Databases (MongoDB)</li>
+                        <li>Database Design and Normalization</li>
+                        <li>ORM/ODM (Sequelize, Mongoose)</li>
+                        <li>Database Optimization</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>API Development</h3>
+                    <ul>
+                        <li>REST API Design Principles</li>
+                        <li>GraphQL Implementation</li>
+                        <li>API Documentation (Swagger)</li>
+                        <li>Rate Limiting and Caching</li>
+                        <li>Microservices Architecture</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">🔧</div>Development Tools & Workflow</h2>
+                
+                <div class="topic">
+                    <h3>Version Control</h3>
+                    <ul>
+                        <li>Git Fundamentals</li>
+                        <li>GitHub/GitLab Workflows</li>
+                        <li>Branching Strategies</li>
+                        <li>Merge Conflicts Resolution</li>
+                        <li>Collaborative Development</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Build Tools & Bundlers</h3>
+                    <ul>
+                        <li>Webpack Configuration</li>
+                        <li>Vite and Modern Bundlers</li>
+                        <li>Task Runners (Gulp, npm scripts)</li>
+                        <li>Code Splitting and Optimization</li>
+                        <li>Development vs Production Builds</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Testing & Quality Assurance</h3>
+                    <ul>
+                        <li>Unit Testing (Jest, Mocha)</li>
+                        <li>Integration Testing</li>
+                        <li>End-to-End Testing (Cypress, Playwright)</li>
+                        <li>Code Linting and Formatting</li>
+                        <li>Continuous Integration/Deployment</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">☁️</div>Deployment & DevOps</h2>
+                
+                <div class="topic">
+                    <h3>Web Hosting & Deployment</h3>
+                    <ul>
+                        <li>Static Site Hosting (Netlify, Vercel)</li>
+                        <li>Cloud Platforms (AWS, Google Cloud, Azure)</li>
+                        <li>Docker Containerization</li>
+                        <li>Server Management</li>
+                        <li>Domain and SSL Configuration</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Performance Optimization</h3>
+                    <ul>
+                        <li>Web Performance Metrics</li>
+                        <li>Image Optimization</li>
+                        <li>Caching Strategies</li>
+                        <li>CDN Implementation</li>
+                        <li>SEO Best Practices</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Security & Best Practices</h3>
+                    <ul>
+                        <li>HTTPS and SSL/TLS</li>
+                        <li>Cross-Site Scripting (XSS) Prevention</li>
+                        <li>SQL Injection Protection</li>
+                        <li>Authentication and Authorization</li>
+                        <li>Security Headers and OWASP Guidelines</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="quiz-section">
+            <h2 style="margin-bottom: 20px; color: #4ecdc4;">Ready to Test Your Knowledge?</h2>
+            <p style="margin-bottom: 30px; font-size: 1.2rem; color: #b0b0b0;">
+                Challenge yourself with our comprehensive web development quiz covering all the topics above!
+            </p>
+<a href="/full-quiz.html">
+  <button class="quiz-btn">Take Quiz</button>
+</a>
+
+        </div>
+    </div>
+
+    <script>
+        
+
+        // Smooth scrolling animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const modules = document.querySelectorAll('.module');
+            
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            modules.forEach(module => {
+                module.style.opacity = '0';
+                module.style.transform = 'translateY(30px)';
+                module.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(module);
+            });
+
+            // Add interactive code examples
+            const codeExamples = document.querySelectorAll('.code-example');
+            codeExamples.forEach(code => {
+                code.addEventListener('click', function() {
+                    navigator.clipboard.writeText(this.textContent);
+                    this.style.background = 'rgba(78, 205, 196, 0.1)';
+                    setTimeout(() => {
+                        this.style.background = '#1a1a1a';
+                    }, 1000);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

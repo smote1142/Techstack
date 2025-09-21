@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Full Stack Development Quiz - Interactive Experience</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 50%, #2d1b69 100%);
+      color: #e0e0e0;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #00ffff;
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+      opacity: 0.6;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    .header {
+      text-align: center;
+      padding: 3rem 2rem;
+      position: relative;
+      z-index: 2;
+    }
+   .header h1 {
+    font-size: 3rem;
+    background: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00);
+    background-size: 300% 300%;
+    -webkit-background-clip: text; /* For Chrome, Safari, Edge */
+    background-clip: text;         /* Standard property */
+    -webkit-text-fill-color: transparent; /* For Chrome, Safari, Edge */
+    color: transparent;             /* Standard fallback */
+    animation: gradient 3s ease infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .header p {
+      font-size: 1.2rem;
+      color: #b0b0b0;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .quiz-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #00ffff, #ff00ff);
+      width: 0%;
+      transition: width 0.3s ease;
+      border-radius: 3px;
+    }
+
+    .question {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transform: translateY(20px);
+      opacity: 0;
+      animation: slideIn 0.6s ease forwards;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .question::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .question:hover::before {
+      left: 100%;
+    }
+
+    .question:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 255, 255, 0.2);
+      border-color: rgba(0, 255, 255, 0.4);
+    }
+
+    @keyframes slideIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .question h4 {
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+    }
+
+    .question-number {
+      background: linear-gradient(45deg, #00ffff, #ff00ff);
+      color: #000;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-weight: bold;
+      margin-right: 1rem;
+      min-width: 50px;
+      text-align: center;
+    }
+
+    .options {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .options label {
+      display: flex;
+      align-items: center;
+      padding: 1.2rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .options label::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+      transition: left 0.3s ease;
+    }
+
+    .options label:hover::before {
+      left: 100%;
+    }
+
+    .options label:hover {
+      background: rgba(0, 255, 255, 0.1);
+      border-color: #00ffff;
+      transform: translateX(10px);
+    }
+
+    .options input[type="radio"] {
+      margin-right: 1rem;
+      transform: scale(1.2);
+      accent-color: #00ffff;
+    }
+
+    .options input[type="radio"]:checked + .option-text {
+      color: #00ffff;
+      font-weight: bold;
+    }
+
+    .submit-container {
+      text-align: center;
+      margin: 3rem 0;
+    }
+
+    #submit-btn {
+      background: linear-gradient(45deg, #00ffff, #ff00ff);
+      color: #000;
+      padding: 1.2rem 3rem;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #submit-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s ease;
+    }
+
+    #submit-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(0, 255, 255, 0.4);
+    }
+
+    #submit-btn:hover::before {
+      left: 100%;
+    }
+
+    #result-popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .result-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(135deg, rgba(15, 15, 35, 0.95), rgba(26, 26, 62, 0.95));
+      backdrop-filter: blur(20px);
+      border: 2px solid rgba(0, 255, 255, 0.3);
+      border-radius: 30px;
+      padding: 3rem;
+      text-align: center;
+      min-width: 400px;
+      box-shadow: 0 30px 60px rgba(0, 255, 255, 0.2);
+      animation: popIn 0.6s ease;
+    }
+
+    @keyframes popIn {
+      from {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+    }
+
+    .score-circle {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: conic-gradient(#00ffff 0deg, #ff00ff 180deg, #ffff00 360deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 2rem;
+      position: relative;
+      animation: rotate 3s ease;
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .score-inner {
+      width: 130px;
+      height: 130px;
+      background: #0f0f23;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .score-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #00ffff;
+    }
+
+    .score-total {
+      font-size: 1rem;
+      color: #b0b0b0;
+    }
+
+    .result-message {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      color: #ffffff;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 25px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(45deg, #00ffff, #ff00ff);
+      color: #000;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .correct-answer {
+      background: rgba(0, 255, 0, 0.1);
+      border: 1px solid rgba(0, 255, 0, 0.3);
+      color: #00ff00;
+      padding: 1rem;
+      border-radius: 10px;
+      margin-top: 1rem;
+      animation: correctSlide 0.5s ease;
+    }
+
+    @keyframes correctSlide {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .incorrect-answer {
+      background: rgba(255, 0, 0, 0.1);
+      border: 1px solid rgba(255, 0, 0, 0.3);
+      color: #ff4444;
+    }
+
+    .loading-spinner {
+      display: none;
+      width: 50px;
+      height: 50px;
+      border: 3px solid rgba(0, 255, 255, 0.1);
+      border-top: 3px solid #00ffff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 2rem;
+      }
+      
+      .question {
+        padding: 1.5rem;
+      }
+      
+      .result-content {
+        min-width: 300px;
+        padding: 2rem;
+      }
+      
+      .action-buttons {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="particles" id="particles"></div>
+
+  <div class="header">
+    <h1>Full Stack Development Quiz</h1>
+    <p>Test your knowledge from beginner to advanced level with this interactive quiz experience</p>
+  </div>
+
+  <div class="quiz-container">
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    
+    <div id="quiz"></div>
+    
+    <div class="submit-container">
+      <div class="loading-spinner" id="loading-spinner"></div>
+      <button id="submit-btn">Submit Quiz</button>
+    </div>
+  </div>
+
+  <div id="result-popup">
+    <div class="result-content">
+      <div class="score-circle">
+        <div class="score-inner">
+          <div class="score-number" id="score-number">0</div>
+          <div class="score-total" id="score-total">/ 52</div>
+        </div>
+      </div>
+      <div class="result-message" id="result-message"></div>
+      <div class="action-buttons">
+        <button class="btn btn-primary" onclick="location.reload()">Try Again</button>
+        <button class="btn btn-secondary" onclick="showReview()">Review Answers</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        q: "What does HTML stand for?",
+        options: ["Hyper Text Markup Language", "Home Tool Markup Language", "Hyperlinks and Text Markup Language", "Highlevel Text Machine Language"],
+        answer: "Hyper Text Markup Language"
+      },
+      {
+        q: "Which HTML tag is used to link an external CSS file?",
+        options: ["style", "css", "link", "script"],
+        answer: "link"
+      },
+      {
+        q: "Which property in CSS is used to change text color?",
+        options: ["font-color", "color", "text-color", "fgcolor"],
+        answer: "color"
+      },
+      {
+        q: "Which JavaScript method is used to access an HTML element by ID?",
+        options: ["getElementById()", "querySelectorAll()", "getElementByClass()", "getElement()"],
+        answer: "getElementById()"
+      },
+      {
+        q: "Which JavaScript keyword is used to declare a constant variable?",
+        options: ["const", "var", "let", "constant"],
+        answer: "const"
+      },
+      {
+        q: "What is the purpose of Node.js?",
+        options: ["Styling HTML pages", "Running JavaScript on the server", "Compiling Java code", "Querying databases"],
+        answer: "Running JavaScript on the server"
+      },
+      {
+        q: "Which npm command initializes a new project?",
+        options: ["npm start", "npm init", "npm install", "npm new"],
+        answer: "npm init"
+      },
+      {
+        q: "What does React use to optimize rendering?",
+        options: ["Virtual DOM", "Real DOM", "Shadow DOM", "DOM Parser"],
+        answer: "Virtual DOM"
+      },
+      {
+        q: "Which hook is used in React to manage state?",
+        options: ["useEffect", "useState", "useRef", "useMemo"],
+        answer: "useState"
+      },
+      {
+        q: "Which database is NoSQL?",
+        options: ["MySQL", "MongoDB", "PostgreSQL", "Oracle"],
+        answer: "MongoDB"
+      },
+      {
+        q: "Which SQL statement is used to insert new data?",
+        options: ["ADD", "INSERT", "PUT", "CREATE"],
+        answer: "INSERT"
+      },
+      {
+        q: "Which HTTP method is used to retrieve data?",
+        options: ["POST", "GET", "PUT", "DELETE"],
+        answer: "GET"
+      },
+      {
+        q: "Which HTTP status code means 'Not Found'?",
+        options: ["200", "500", "404", "403"],
+        answer: "404"
+      },
+      {
+        q: "Which is a version control system?",
+        options: ["Git", "Gulp", "Webpack", "Node.js"],
+        answer: "Git"
+      },
+      {
+        q: "What command is used to clone a Git repository?",
+        options: ["git commit", "git init", "git push", "git clone"],
+        answer: "git clone"
+      },
+      {
+        q: "What does REST stand for?",
+        options: ["Random Essential State Transfer", "Representational State Transfer", "Real-time System Transfer", "Remote Execution Script Tool"],
+        answer: "Representational State Transfer"
+      },
+      {
+        q: "Which tool is used to test APIs?",
+        options: ["GitHub", "Postman", "VS Code", "Firebase"],
+        answer: "Postman"
+      },
+      {
+        q: "What is CORS used for?",
+        options: ["Script compression", "Cross-domain requests", "Database security", "Client-side routing"],
+        answer: "Cross-domain requests"
+      },
+      {
+        q: "Which frontend framework uses components and hooks?",
+        options: ["jQuery", "React", "Bootstrap", "AngularJS"],
+        answer: "React"
+      },
+      {
+        q: "Which command starts a React app?",
+        options: ["npm build", "npm start", "npm init", "node app.js"],
+        answer: "npm start"
+      },
+      {
+        q: "Which of the following is used to define routes in React?",
+        options: ["react-dom", "react-router-dom", "react-path", "react-navigation"],
+        answer: "react-router-dom"
+      },
+      {
+        q: "Which lifecycle method is invoked immediately after a component is inserted in React?",
+        options: ["componentDidMount", "componentWillMount", "componentDidUpdate", "render"],
+        answer: "componentDidMount"
+      },
+      {
+        q: "Which command is used to install dependencies in a Node.js project?",
+        options: ["node install", "npm start", "npm install", "npm run"],
+        answer: "npm install"
+      },
+      {
+        q: "Which port is commonly used for local development in React?",
+        options: ["3000", "5000", "8080", "4000"],
+        answer: "3000"
+      },
+      {
+        q: "Which hook is used for side effects in React?",
+        options: ["useState", "useMemo", "useEffect", "useRef"],
+        answer: "useEffect"
+      },
+      {
+        q: "What does SQL stand for?",
+        options: ["Structured Query Language", "Simple Query Language", "Sequential Query Language", "Scripted Query Logic"],
+        answer: "Structured Query Language"
+      },
+      {
+        q: "Which HTTP method is used to delete a resource?",
+        options: ["GET", "POST", "DELETE", "PUT"],
+        answer: "DELETE"
+      },
+      {
+        q: "Which database query is used to get unique values?",
+        options: ["SELECT DISTINCT", "SELECT UNIQUE", "SELECT ONLY", "SELECT FILTER"],
+        answer: "SELECT DISTINCT"
+      },
+      {
+        q: "Which command creates a new table in SQL?",
+        options: ["CREATE TABLE", "NEW TABLE", "MAKE TABLE", "ADD TABLE"],
+        answer: "CREATE TABLE"
+      },
+      {
+        q: "What is JSX in React?",
+        options: ["JavaScript XML", "JSON Syntax Extension", "JavaScript Extension", "Java Syntax"],
+        answer: "JavaScript XML"
+      },
+      {
+        q: "Which backend language is often used with Express?",
+        options: ["PHP", "Java", "Python", "JavaScript"],
+        answer: "JavaScript"
+      },
+      {
+        q: "Which command is used to initialize a Git repo?",
+        options: ["git init", "git start", "git create", "git begin"],
+        answer: "git init"
+      },
+      {
+        q: "Which CSS property controls the text size?",
+        options: ["text-style", "font-weight", "font-size", "text-size"],
+        answer: "font-size"
+      },
+      {
+        q: "Which tag is used to create a hyperlink in HTML?",
+        options: ["<link>", "<a>", "<href>", "<hyperlink>"],
+        answer: "<a>"
+      },
+      {
+        q: "Which attribute is used to provide an image source?",
+        options: ["alt", "src", "href", "source"],
+        answer: "src"
+      },
+      {
+        q: "Which tag is used to insert a line break in HTML?",
+        options: ["<break>", "<br>", "<lb>", "<line>"],
+        answer: "<br>"
+      },
+      {
+        q: "What does API stand for?",
+        options: ["Application Programming Interface", "Advanced Programming Interface", "App Page Index", "Application Performance Input"],
+        answer: "Application Programming Interface"
+      },
+      {
+        q: "Which keyword is used to define a variable in JavaScript?",
+        options: ["let", "var", "const", "All of the above"],
+        answer: "All of the above"
+      },
+      {
+        q: "Which tag is used to define a table row in HTML?",
+        options: ["td", "th", "tr", "table"],
+        answer: "tr"
+      },
+      {
+        q: "Which method is used to read data from MongoDB?",
+        options: ["get()", "fetch()", "find()", "select()"],
+        answer: "find()"
+      },
+      {
+        q: "What does CRUD stand for?",
+        options: ["Create, Read, Update, Delete", "Copy, Read, Use, Drop", "Create, Run, Update, Deploy", "Clone, Replace, Upload, Download"],
+        answer: "Create, Read, Update, Delete"
+      },
+      {
+        q: "What is a component in React?",
+        options: ["Function returning JSX", "CSS Module", "Backend API", "Mongo Collection"],
+        answer: "Function returning JSX"
+      },
+      {
+        q: "Which function is used to send HTTP requests in JavaScript?",
+        options: ["fetch()", "request()", "get()", "axios()"],
+        answer: "fetch()"
+      },
+      {
+        q: "What is the main file of a Node.js app?",
+        options: ["main.js", "server.js", "app.js", "index.js"],
+        answer: "app.js"
+      },
+      {
+        q: "Which SQL clause is used to filter groups?",
+        options: ["WHERE", "GROUP BY", "HAVING", "SELECT"],
+        answer: "HAVING"
+      },
+      {
+        q: "Which command is used to merge branches in Git?",
+        options: ["git join", "git merge", "git sync", "git push"],
+        answer: "git merge"
+      },
+      {
+        q: "Which command is used to start an Express server?",
+        options: ["express start", "npm run dev", "node server.js", "start express"],
+        answer: "node server.js"
+      },
+      {
+        q: "Which protocol is used to serve web pages?",
+        options: ["HTTP", "FTP", "SMTP", "SSH"],
+        answer: "HTTP"
+      },
+      {
+        q: "What is Babel in React projects?",
+        options: ["Testing tool", "Transpiler", "Bundler", "Package manager"],
+        answer: "Transpiler"
+      },
+      {
+        q: "Which of these is a backend framework?",
+        options: ["Express.js", "Bootstrap", "React", "Tailwind"],
+        answer: "Express.js"
+      },
+      {
+        q: "What is the extension of a JavaScript file?",
+        options: [".java", ".js", ".jsx", ".ts"],
+        answer: ".js"
+      },
+      {
+        q: "Which HTML tag defines a list item?",
+        options: ["ul", "li", "ol", "item"],
+        answer: "li"
+      },
+      {
+        q: "What is the purpose of a package.json file?",
+        options: ["List dependencies", "Project metadata", "Scripts", "All of the above"],
+        answer: "All of the above"
+      }
+    ];
+
+    // Create floating particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 6 + 's';
+        particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    // Initialize quiz
+    function initializeQuiz() {
+      const quizContainer = document.getElementById('quiz');
+
+      questions.forEach((q, index) => {
+        const questionDiv = document.createElement('div');
+        questionDiv.className = 'question';
+        questionDiv.style.animationDelay = (index * 0.1) + 's';
+        
+        questionDiv.innerHTML = `
+          <h4>
+            <span class="question-number">${index + 1}</span>
+            ${q.q}
+          </h4>
+        `;
+        
+        const optionsDiv = document.createElement('div');
+        optionsDiv.className = 'options';
+
+        q.options.forEach((option, i) => {
+          const optId = `q${index}_opt${i}`;
+          optionsDiv.innerHTML += `
+            <label>
+              <input type="radio" name="q${index}" value="${option}" id="${optId}">
+              <span class="option-text">${option}</span>
+            </label>`;
+        });
+
+        questionDiv.appendChild(optionsDiv);
+        quizContainer.appendChild(questionDiv);
+      });
+
+      // Add progress tracking
+      document.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', updateProgress);
+      });
+    }
+
+    // Update progress bar
+    function updateProgress() {
+      const totalQuestions = questions.length;
+      const answeredQuestions = new Set();
+      
+      document.querySelectorAll('input[type="radio"]:checked').forEach(radio => {
+        const questionIndex = radio.name.replace('q', '');
+        answeredQuestions.add(questionIndex);
+      });
+      
+      const progress = (answeredQuestions.size / totalQuestions) * 100;
+      document.getElementById('progress-fill').style.width = progress + '%';
+    }
+
+    // Animate score counter
+    function animateScore(targetScore) {
+      const scoreElement = document.getElementById('score-number');
+      let currentScore = 0;
+      const increment = targetScore / 30;
+      
+      const timer = setInterval(() => {
+        currentScore += increment;
+        if (currentScore >= targetScore) {
+          currentScore = targetScore;
+          clearInterval(timer);
+        }
+        scoreElement.textContent = Math.floor(currentScore);
+      }, 50);
+    }
+
+    // Get result message based on score
+    function getResultMessage(score, total) {
+      const percentage = (score / total) * 100;
+      
+      if (percentage >= 90) return "🚀 Outstanding! You're a Full Stack Expert!";
+      if (percentage >= 80) return "🎉 Excellent! You have strong full stack knowledge!";
+      if (percentage >= 70) return "👍 Great job! You're well on your way!";
+      if (percentage >= 60) return "📚 Good effort! Keep learning and practicing!";
+      if (percentage >= 50) return "💪 Not bad! Review the concepts and try again!";
+      return "🎯 Keep studying! You'll get there with practice!";
+    }
+
+    // Show review function
+    window.showReview = function() {
+      document.getElementById('result-popup').style.display = 'none';
+      document.querySelector('.quiz-container').scrollIntoView({ behavior: 'smooth' });
+    };
+
+    // Submit quiz
+    document.getElementById('submit-btn').addEventListener('click', () => {
+      const submitBtn = document.getElementById('submit-btn');
+      const loadingSpinner = document.getElementById('loading-spinner');
+      
+      // Show loading animation
+      submitBtn.style.display = 'none';
+      loadingSpinner.style.display = 'block';
+      
+      setTimeout(() => {
+        let score = 0;
+        const results = [];
+
+        questions.forEach((q, i) => {
+          const selected = document.querySelector(`input[name="q${i}"]:checked`);
+          const userAnswer = selected ? selected.value : '';
+          const questionDiv = document.querySelectorAll('.question')[i];
+          const isCorrect = userAnswer === q.answer;
+
+          if (isCorrect) {
+            score++;
+          }
+
+          results.push({
+            question: q.q,
+            userAnswer,
+            correctAnswer: q.answer,
+            isCorrect
+          });
+
+          // Show correct answer
+          const correctDiv = document.createElement('div');
+          correctDiv.className = isCorrect ? 'correct-answer' : 'correct-answer incorrect-answer';
+          correctDiv.innerHTML = `
+            <strong>${isCorrect ? '✅ Correct!' : '❌ Incorrect'}</strong><br>
+            Correct Answer: ${q.answer}
+            ${!isCorrect && userAnswer ? `<br>Your Answer: ${userAnswer}` : ''}
+          `;
+          questionDiv.appendChild(correctDiv);
+        });
+
+        // Hide loading and show results
+        loadingSpinner.style.display = 'none';
+        
+        // Update result popup
+        document.getElementById('score-total').textContent = `/ ${questions.length}`;
+        document.getElementById('result-message').textContent = getResultMessage(score, questions.length);
+        
+        // Show popup with animation
+        document.getElementById('result-popup').style.display = 'block';
+        
+        // Animate score after popup appears
+        setTimeout(() => {
+          animateScore(score);
+        }, 300);
+        
+      }, 1500); // Simulate processing time
+    });
+
+    // Initialize everything when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      createParticles();
+      initializeQuiz();
+    });
+
+    // Add smooth scrolling for better UX
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // Add keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && e.target.type === 'radio') {
+        e.target.checked = true;
+        updateProgress();
+      }
+    });
+
+    // Add question hover effects with sound simulation
+    document.addEventListener('DOMContentLoaded', () => {
+      const questions = document.querySelectorAll('.question');
+      questions.forEach((question, index) => {
+        question.addEventListener('mouseenter', () => {
+          // Add subtle scale effect
+          question.style.transform = 'translateY(-5px) scale(1.02)';
+        });
+        
+        question.addEventListener('mouseleave', () => {
+          question.style.transform = 'translateY(-5px) scale(1)';
+        });
+      });
+    });
+
+    // Add click effects to options
+    document.addEventListener('change', (e) => {
+      if (e.target.type === 'radio') {
+        // Remove previous selections styling
+        const questionContainer = e.target.closest('.question');
+        questionContainer.querySelectorAll('label').forEach(label => {
+          label.style.background = 'rgba(255, 255, 255, 0.03)';
+          label.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+        });
+        
+        // Highlight selected option
+        const selectedLabel = e.target.closest('label');
+        selectedLabel.style.background = 'rgba(0, 255, 255, 0.15)';
+        selectedLabel.style.borderColor = '#00ffff';
+        
+        // Add ripple effect
+        const ripple = document.createElement('div');
+        ripple.style.cssText = `
+          position: absolute;
+          width: 20px;
+          height: 20px;
+          background: rgba(0, 255, 255, 0.6);
+          border-radius: 50%;
+          transform: scale(0);
+          animation: ripple 0.6s ease-out;
+          pointer-events: none;
+          left: 20px;
+          top: 50%;
+          margin-top: -10px;
+        `;
+        
+        selectedLabel.style.position = 'relative';
+        selectedLabel.appendChild(ripple);
+        
+        setTimeout(() => {
+          ripple.remove();
+        }, 600);
+      }
+    });
+
+    // Add CSS for ripple animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes ripple {
+        to {
+          transform: scale(2);
+          opacity: 0;
+        }
+      }
+      
+      .question:nth-child(odd) {
+        animation-delay: 0.1s;
+      }
+      
+      .question:nth-child(even) {
+        animation-delay: 0.2s;
+      }
+      
+      /* Add glow effect to submit button when quiz is complete */
+      .submit-ready {
+        animation: pulse 2s infinite;
+      }
+      
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 10px 30px rgba(0, 255, 255, 0.4);
+        }
+        50% {
+          box-shadow: 0 10px 40px rgba(0, 255, 255, 0.8);
+        }
+        100% {
+          box-shadow: 0 10px 30px rgba(0, 255, 255, 0.4);
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Check if quiz is complete and add glow effect
+    function checkQuizCompletion() {
+      const totalQuestions = questions.length;
+      const answeredQuestions = document.querySelectorAll('input[type="radio"]:checked').length;
+      const submitBtn = document.getElementById('submit-btn');
+      
+      if (answeredQuestions === totalQuestions) {
+        submitBtn.classList.add('submit-ready');
+      } else {
+        submitBtn.classList.remove('submit-ready');
+      }
+    }
+
+    // Update progress and check completion
+    function updateProgress() {
+      const totalQuestions = questions.length;
+      const answeredQuestions = new Set();
+      
+      document.querySelectorAll('input[type="radio"]:checked').forEach(radio => {
+        const questionIndex = radio.name.replace('q', '');
+        answeredQuestions.add(questionIndex);
+      });
+      
+      const progress = (answeredQuestions.size / totalQuestions) * 100;
+      document.getElementById('progress-fill').style.width = progress + '%';
+      
+      // Check completion
+      checkQuizCompletion();
+    }
+  </script>
+</body>
+</html>

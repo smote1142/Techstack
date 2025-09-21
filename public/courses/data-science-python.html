@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Web Development Course</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+      .header h1 {
+    font-size: 3.5rem;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+    background-clip: text;                /* Standard property */
+    -webkit-background-clip: text;        /* WebKit-specific for Chrome/Safari */
+    -webkit-text-fill-color: transparent; /* Makes gradient visible in text */
+    margin-bottom: 10px;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 5px rgba(78, 205, 196, 0.3)); }
+            to { filter: drop-shadow(0 0 20px rgba(78, 205, 196, 0.6)); }
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            color: #b0b0b0;
+            margin-top: 15px;
+        }
+
+        .course-content {
+            display: grid;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .module {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .module:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(78, 205, 196, 0.2);
+            border-color: rgba(78, 205, 196, 0.3);
+        }
+
+        .module h2 {
+            color: #4ecdc4;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .module-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .topic {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid #4ecdc4;
+            transition: all 0.3s ease;
+        }
+
+        .topic:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(10px);
+        }
+
+        .topic h3 {
+            color: #45b7d1;
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+        }
+
+        .topic ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .topic li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #c0c0c0;
+            transition: color 0.3s ease;
+        }
+
+        .topic li:before {
+            content: "▶";
+            position: absolute;
+            left: 0;
+            color: #4ecdc4;
+            font-size: 0.8rem;
+        }
+
+        .topic li:hover {
+            color: #ffffff;
+        }
+
+        .code-example {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 1px solid #333;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-example:before {
+            content: "CODE";
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 0.7rem;
+            color: #4ecdc4;
+            opacity: 0.7;
+        }
+
+        .code-example code {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .quiz-section {
+            text-align: center;
+            margin-top: 50px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .quiz-btn {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 25px rgba(78, 205, 196, 0.3);
+        }
+
+        .quiz-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(78, 205, 196, 0.5);
+            filter: brightness(1.1);
+        }
+
+        .quiz-btn:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            animation: loading 3s ease-in-out infinite;
+        }
+
+        @keyframes loading {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+
+        .floating-shapes {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(78, 205, 196, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .module {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar"></div>
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>📊 Complete Data Science Course</h1>
+            <p>Dive into the world of Data Science — master data analysis, visualization, machine learning, and AI with practical tools and real-world projects.</p>
+        </div>
+
+        <div class="course-content">
+            <div class="module">
+                <h2><div class="module-icon">🔍</div>What is Data Science?</h2>
+                <div class="topic">
+                    <h3>Overview</h3>
+                    <ul>
+                        <li>Data Science is a multidisciplinary field focused on extracting insights from structured and unstructured data.</li>
+                        <li>It combines programming, statistics, and domain knowledge to solve real-world problems.</li>
+                        <li>Popular in industries like healthcare, finance, e-commerce, and logistics.</li>
+                        <li>Data Scientists use tools like Python, R, SQL, and ML frameworks like scikit-learn and TensorFlow.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">🧠</div>Core Areas in Data Science</h2>
+                <div class="topic">
+                    <h3>1. Data Collection & Cleaning</h3>
+                    <ul>
+                        <li>Gathering data from multiple sources: APIs, files, databases, web scraping.</li>
+                        <li>Handling missing values, duplicates, and formatting issues.</li>
+                        <li>Using libraries like <code>pandas</code> for efficient data manipulation.</li>
+                    </ul>
+                </div>
+                <div class="topic">
+                    <h3>2. Exploratory Data Analysis (EDA)</h3>
+                    <ul>
+                        <li>Understanding data distribution, trends, and patterns.</li>
+                        <li>Visualization tools: Matplotlib, Seaborn, Plotly.</li>
+                        <li>Correlation analysis and hypothesis testing.</li>
+                    </ul>
+                </div>
+                <div class="topic">
+                    <h3>3. Machine Learning</h3>
+                    <ul>
+                        <li>Building predictive models using supervised and unsupervised learning.</li>
+                        <li>Popular algorithms: Linear Regression, Decision Trees, K-Means, SVM, etc.</li>
+                        <li>Model training, validation, and performance tuning.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">📊</div>Tools and Technologies</h2>
+                <div class="topic">
+                    <h3>Programming & Libraries</h3>
+                    <ul>
+                        <li>Python, Jupyter Notebooks, R, SQL.</li>
+                        <li>Libraries: NumPy, pandas, scikit-learn, TensorFlow, Keras, PyTorch.</li>
+                        <li>Data visualization: Matplotlib, Seaborn, Plotly, Power BI.</li>
+                    </ul>
+                    <div class="code-example">
+                        <code>
+import pandas as pd<br>
+df = pd.read_csv("data.csv")<br>
+df.info()<br>
+df.describe()
+                        </code>
+                    </div>
+                </div>
+
+                <div class="topic">
+                    <h3>Cloud & Big Data</h3>
+                    <ul>
+                        <li>Cloud services: AWS, Google Cloud, Azure.</li>
+                        <li>Big Data tools: Hadoop, Spark.</li>
+                        <li>Data storage: S3, BigQuery, Snowflake.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">🚀</div>Real-World Applications</h2>
+                <div class="topic">
+                    <h3>Industries Leveraging Data Science</h3>
+                    <ul>
+                        <li>Healthcare: Disease prediction, medical imaging analysis.</li>
+                        <li>Finance: Credit scoring, fraud detection.</li>
+                        <li>Retail: Recommendation engines, customer segmentation.</li>
+                        <li>Transportation: Route optimization, demand forecasting.</li>
+                    </ul>
+                </div>
+                <div class="topic">
+                    <h3>Project Lifecycle</h3>
+                    <ul>
+                        <li>Problem definition and goal setting.</li>
+                        <li>Data acquisition and preparation.</li>
+                        <li>Model development and evaluation.</li>
+                        <li>Deployment and monitoring.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling animation
+        document.addEventListener('DOMContentLoaded', function () {
+            const modules = document.querySelectorAll('.module');
+
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function (entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            modules.forEach(module => {
+                module.style.opacity = '0';
+                module.style.transform = 'translateY(30px)';
+                module.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(module);
+            });
+
+            // Add interactive code examples
+            const codeExamples = document.querySelectorAll('.code-example');
+            codeExamples.forEach(code => {
+                code.addEventListener('click', function () {
+                    navigator.clipboard.writeText(this.textContent);
+                    this.style.background = 'rgba(78, 205, 196, 0.1)';
+                    setTimeout(() => {
+                        this.style.background = '#1a1a1a';
+                    }, 1000);
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

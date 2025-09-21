@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SnehTech AI Assistant</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+      color: #fff;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Animated Background */
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.1;
+    }
+
+    .bg-animation::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%2300ff41" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+      animation: gridMove 20s linear infinite;
+    }
+
+    @keyframes gridMove {
+      0% { transform: translateY(0) translateX(0); }
+      100% { transform: translateY(-10px) translateX(-10px); }
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(20px);
+      padding: 1rem 2rem;
+      border-bottom: 2px solid #00ff41;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-logo {
+      color: #00ff41;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .nav-logo:hover {
+      text-shadow: 0 0 20px #00ff41;
+      transform: scale(1.05);
+    }
+
+    /* Profile Dropdown */
+    .profile-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .profile-button {
+      background: linear-gradient(45deg, #00d4ff, #ff00aa);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .profile-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .profile-button:hover::before {
+      left: 100%;
+    }
+
+    .profile-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 212, 255, 0.4);
+    }
+
+    .profile-button::after {
+      content: "▼";
+      font-size: 0.8rem;
+      transition: transform 0.3s ease;
+    }
+
+    .profile-button.active::after {
+      transform: rotate(180deg);
+    }
+
+    .dropdown-content {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: rgba(20, 20, 20, 0.95);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(0, 255, 65, 0.3);
+      border-radius: 15px;
+      min-width: 350px;
+      box-shadow: 0 15px 35px rgba(0, 255, 65, 0.2);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      margin-top: 10px;
+    }
+
+    .dropdown-content.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+    }
+
+    .dropdown-header h3 {
+      color: #00d4ff;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .dropdown-header p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
+    }
+
+    .logout-button {
+      background: rgba(255, 0, 170, 0.2);
+      color: #ff00aa;
+      border: 1px solid #ff00aa;
+      padding: 0.75rem 1.5rem;
+      border-radius: 10px;
+      cursor: pointer;
+      width: calc(100% - 3rem);
+      margin: 1rem 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .logout-button:hover {
+      background: rgba(255, 0, 170, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 0, 170, 0.3);
+    }
+
+    /* Main Content */
+    .main-content {
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      text-align: center;
+      padding: 4rem 0;
+      background: linear-gradient(135deg, rgba(0, 255, 65, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+      border-radius: 20px;
+      margin-bottom: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, transparent, rgba(0, 255, 65, 0.1), transparent);
+      animation: rotate 20s linear infinite;
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: 700;
+      background: linear-gradient(45deg, #00ff41, #00d4ff, #ff00aa);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { filter: drop-shadow(0 0 20px rgba(0, 255, 65, 0.5)); }
+      to { filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.7)); }
+    }
+
+    .hero-subtitle {
+      font-size: 1.3rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 2rem;
+    }
+
+    /* Feature Cards Slideshow */
+    .slideshow-container {
+      position: relative;
+      max-width: 100%;
+      margin: 3rem 0;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(0, 255, 65, 0.3);
+    }
+
+    .slide {
+      display: none;
+      padding: 3rem;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(0, 255, 65, 0.05) 0%, rgba(0, 212, 255, 0.05) 100%);
+      position: relative;
+    }
+
+    .slide.active {
+      display: block;
+      animation: slideIn 0.5s ease-in-out;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(50px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .slide h3 {
+      font-size: 2rem;
+      color: #00d4ff;
+      margin-bottom: 1rem;
+    }
+
+    .slide p {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Navigation Dots */
+    .dots-container {
+      text-align: center;
+      padding: 2rem 0;
+    }
+
+    .dot {
+      height: 15px;
+      width: 15px;
+      margin: 0 10px;
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      display: inline-block;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .dot:hover {
+      background-color: rgba(0, 255, 65, 0.7);
+      transform: scale(1.2);
+      box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+    }
+
+    .dot.active {
+      background-color: #00ff41;
+      border-color: #00d4ff;
+      box-shadow: 0 0 20px rgba(0, 255, 65, 0.7);
+    }
+
+    /* AI Features Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .feature-card {
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(26, 26, 46, 0.8) 100%);
+      border: 1px solid rgba(0, 255, 65, 0.3);
+      border-radius: 20px;
+      padding: 2rem;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .feature-card:hover::before {
+      left: 100%;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      border-color: #00ff41;
+      box-shadow: 0 20px 40px rgba(0, 255, 65, 0.3);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, #00ff41, #00d4ff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .feature-card h3 {
+      color: #00d4ff;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card p {
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+    }
+
+    /* CTA Button */
+    .cta-button {
+      background: linear-gradient(45deg, #00ff41, #00d4ff);
+      color: #000;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      margin: 2rem auto;
+      display: block;
+    }
+
+    .cta-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    .cta-button:hover::before {
+      left: 100%;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(0, 255, 65, 0.4);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+      
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .main-content {
+        padding: 1rem;
+      }
+      
+      .navbar {
+        padding: 1rem;
+      }
+    }
+     /* Profile Dropdown */
+        .profile-dropdown {
+            position: relative;
+            display: inline-block;
+            margin-left: auto;
+        }
+
+        .profile-button {
+            background: linear-gradient(45deg, #00d4ff, #ff00aa);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .profile-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.4);
+        }
+
+        .profile-button::after {
+            content: "▼";
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-button.active::after {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            min-width: 350px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            margin-top: 10px;
+        }
+
+        .dropdown-content.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-header h3 {
+            color: #00d4ff;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .dropdown-header p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        .dropdown-section {
+            padding: 1rem 1.5rem;
+        }
+
+        .dropdown-section h4 {
+            color: #ff00aa;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dropdown-section ul {
+            list-style: none;
+            margin-left: 1rem;
+        }
+
+        .dropdown-section li {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            margin: 0.25rem 0;
+            padding: 0.25rem 0;
+        }
+
+        .dropdown-section .stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-section .stat:last-child {
+            border-bottom: none;
+        }
+
+        .stat-value {
+            color: #00d4ff;
+            font-weight: 600;
+        }
+
+        .logout-button {
+            background: rgba(255, 0, 170, 0.2);
+            color: #ff00aa;
+            border: 1px solid #ff00aa;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .logout-button:hover {
+            background: rgba(255, 0, 170, 0.3);
+            transform: translateY(-2px);
+        }
+             .navbar {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background-color: #121212;
+      border-bottom: 2px solid #00ff41;
+    }
+    .nav-logo, .nav-link {
+      color: #00ff41;
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: bold;
+      margin-right: 15px;
+    }
+    .nav-link:hover {
+      text-decoration: underline;
+    }
+    .view {
+      display: none;
+      padding: 2rem;
+    }
+    .active {
+      display: block;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="bg-animation"></div>
+
+
+<nav class="navbar">
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo">Home</a>
+  </div>
+  <div>    <a href="login.html" class="nav-logo">Sign In</a></div>
+</nav>
+
+<div class="main-content">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">AI Assistant</h1>
+      <p class="hero-subtitle">Experience the future of intelligent automation and seamless interaction</p>
+      <button class="cta-button" onclick="launchAI()">Start Conversation</button>
+    </div>
+  </section>
+</div>
+
+<!-- Place this script just before the closing </body> tag -->
+<script src="https://cdn.jotfor.ms/agent/embedjs/0197ff504405726a932d4f25a9ac27fbb462/embed.js?skipWelcome=1&maximizable=1"></script>
+<script>
+  function launchAI() {
+    if (window.jfa) {
+      jfa.open(); // This opens the AI assistant
+    } else {
+      alert("Assistant is still loading, please try again in a moment.");
+    }
+  }
+</script>
+
+    <!-- Slideshow -->
+    <div class="slideshow-container">
+      <div class="slide active">
+        <h3>🧠 Advanced Machine Learning</h3>
+        <p>Our AI leverages cutting-edge machine learning algorithms to provide intelligent responses and continuous learning capabilities. Experience personalized interactions that adapt to your unique needs and preferences.</p>
+      </div>
+      
+      <div class="slide">
+        <h3>⚡ Real-time Processing</h3>
+        <p>Lightning-fast response times with real-time data processing ensure seamless conversations. Our optimized infrastructure delivers instant AI responses for maximum productivity and user satisfaction.</p>
+      </div>
+      
+      <div class="slide">
+        <h3>🔒 Secure & Private</h3>
+        <p>Enterprise-grade security with end-to-end encryption protects your data and conversations. Your privacy is our priority with advanced security protocols and compliance standards.</p>
+      </div>
+      
+      <div class="slide">
+        <h3>🌐 Multi-language Support</h3>
+        <p>Communicate in your preferred language with our advanced multilingual AI capabilities. Supporting over 50 languages with natural conversation flow and cultural context understanding.</p>
+      </div>
+    </div>
+
+    <div class="dots-container">
+      <span class="dot active" onclick="currentSlide(1)"></span>
+      <span class="dot" onclick="currentSlide(2)"></span>
+      <span class="dot" onclick="currentSlide(3)"></span>
+      <span class="dot" onclick="currentSlide(4)"></span>
+    </div>
+
+    <!-- Features Grid -->
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>Smart Analytics</h3>
+        <p>Advanced analytics and insights to help you make data-driven decisions. Track performance, analyze trends, and optimize your workflow with AI-powered intelligence.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">💡</div>
+        <h3>Creative Solutions</h3>
+        <p>Generate innovative ideas and creative solutions for complex problems. Our AI assists in brainstorming, content creation, and strategic planning processes.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Data Visualization</h3>
+        <p>Transform complex data into beautiful, interactive visualizations. Make sense of your information with AI-generated charts, graphs, and comprehensive reports.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+
+    // Slideshow functionality
+    let slideIndex = 1;
+    
+    function currentSlide(n) {
+      showSlide(slideIndex = n);
+    }
+    
+    function showSlide(n) {
+      let slides = document.getElementsByClassName('slide');
+      let dots = document.getElementsByClassName('dot');
+      
+      if (n > slides.length) { slideIndex = 1; }
+      if (n < 1) { slideIndex = slides.length; }
+      
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].classList.remove('active');
+      }
+      
+      for (let i = 0; i < dots.length; i++) {
+        dots[i].classList.remove('active');
+      }
+      
+      slides[slideIndex - 1].classList.add('active');
+      dots[slideIndex - 1].classList.add('active');
+    }
+    
+    // Auto slide every 5 seconds
+    setInterval(function() {
+      slideIndex++;
+      if (slideIndex > 4) slideIndex = 1;
+      showSlide(slideIndex);
+    }, 5000);
+
+    // CTA Button functionality
+    function startAIInteraction() {
+      // Create and show AI chat interface
+      const chatContainer = document.createElement('div');
+      chatContainer.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: 800px;
+        height: 600px;
+        background: rgba(20, 20, 20, 0.95);
+        backdrop-filter: blur(20px);
+        border: 2px solid #00ff41;
+        border-radius: 20px;
+        z-index: 10000;
+        padding: 2rem;
+        box-shadow: 0 20px 60px rgba(0, 255, 65, 0.3);
+      `;
+      
+      chatContainer.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+          <h2 style="color: #00ff41; margin: 0;">AI Assistant Chat</h2>
+          <button onclick="this.parentElement.parentElement.remove()" style="background: #ff00aa; color: white; border: none; padding: 0.5rem 1rem; border-radius: 10px; cursor: pointer;">Close</button>
+        </div>
+        <div style="height: 400px; background: rgba(0, 0, 0, 0.5); border-radius: 15px; padding: 1rem; overflow-y: auto; border: 1px solid rgba(0, 255, 65, 0.3);">
+          <p style="color: #00d4ff; margin-bottom: 1rem;">🤖 AI Assistant: Hello! I'm your SnehTech AI Assistant. How can I help you today?</p>
+        </div>
+        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+          <input type="text" placeholder="Type your message..." style="flex: 1; padding: 1rem; background: rgba(0, 0, 0, 0.7); border: 1px solid #00ff41; border-radius: 10px; color: white;">
+          <button style="padding: 1rem 2rem; background: linear-gradient(45deg, #00ff41, #00d4ff); color: black; border: none; border-radius: 10px; cursor: pointer; font-weight: 600;">Send</button>
+        </div>
+      `;
+      
+      document.body.appendChild(chatContainer);
+      
+      // Focus on input
+      const input = chatContainer.querySelector('input');
+      input.focus();
+      
+      // Add send functionality
+      const sendBtn = chatContainer.querySelector('button:last-child');
+      const chatArea = chatContainer.querySelector('div[style*="height: 400px"]');
+      
+      function sendMessage() {
+        const message = input.value.trim();
+        if (message) {
+          chatArea.innerHTML += `<p style="color: #fff; margin-bottom: 1rem; text-align: right;">You: ${message}</p>`;
+          input.value = '';
+          
+          // Simulate AI response
+          setTimeout(() => {
+            const responses = [
+              "I understand your query. Let me help you with that.",
+              "That's a great question! Here's what I can tell you...",
+              "I'm processing your request. One moment please...",
+              "Excellent! I have some insights to share with you.",
+              "Let me analyze that for you and provide the best solution."
+            ];
+            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+            chatArea.innerHTML += `<p style="color: #00d4ff; margin-bottom: 1rem;">🤖 AI Assistant: ${randomResponse}</p>`;
+            chatArea.scrollTop = chatArea.scrollHeight;
+          }, 1000);
+          
+          chatArea.scrollTop = chatArea.scrollHeight;
+        }
+      }
+      
+      sendBtn.addEventListener('click', sendMessage);
+      input.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          sendMessage();
+        }
+      });
+    }
+
+    // Add particle effects
+    function createParticle() {
+      const particle = document.createElement('div');
+      particle.style.cssText = `
+        position: fixed;
+        width: 4px;
+        height: 4px;
+        background: #00ff41;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: -1;
+        animation: float 6s linear infinite;
+      `;
+      
+      particle.style.left = Math.random() * window.innerWidth + 'px';
+      particle.style.top = window.innerHeight + 'px';
+      
+      document.body.appendChild(particle);
+      
+      setTimeout(() => {
+        particle.remove();
+      }, 6000);
+    }
+    
+    // Create particles periodically
+    setInterval(createParticle, 300);
+    
+    // Add floating animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes float {
+        0% {
+          transform: translateY(0) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>

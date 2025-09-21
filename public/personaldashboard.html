@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Coding Roadmap</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            color: #e0e6ed;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 0;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(64, 224, 208, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        h1 {
+            font-size: 3rem;
+            background: linear-gradient(45deg, #00d4ff, #ff00d4, #00ff88);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient 4s ease infinite;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #a0a6b0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .level-section {
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .level-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+            transition: left 0.5s ease;
+        }
+
+        .level-section:hover::before {
+            left: 100%;
+        }
+
+        .level-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+            border-color: rgba(0, 212, 255, 0.3);
+        }
+
+        .level-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .beginner { color: #00ff88; }
+        .intermediate { color: #ffa500; }
+        .advanced { color: #ff4757; }
+
+        .language-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .language-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .language-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 0, 212, 0.1), rgba(0, 212, 255, 0.1));
+            transition: width 0.4s ease;
+        }
+
+        .language-card:hover::after {
+            width: 100%;
+        }
+
+        .language-card:hover {
+            transform: scale(1.02);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .language-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #00d4ff;
+            position: relative;
+            z-index: 1;
+        }
+
+        .problems-section, .projects-section {
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #ff6b8a;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .problem-item, .project-item {
+            padding: 8px 12px;
+            margin: 5px 0;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            border-left: 3px solid #00d4ff;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .problem-item::before, .project-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .problem-item:hover::before, .project-item:hover::before {
+            left: 100%;
+        }
+
+        .problem-item:hover, .project-item:hover {
+            background: rgba(0, 212, 255, 0.15);
+            transform: translateX(10px);
+            border-left-color: #ff00d4;
+        }
+
+        .problem-number {
+            color: #00ff88;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .difficulty-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .easy { background: #00ff8820; color: #00ff88; }
+        .medium { background: #ffa50020; color: #ffa500; }
+        .hard { background: #ff475720; color: #ff4757; }
+
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, rgba(0, 212, 255, 0.1), rgba(255, 0, 212, 0.1));
+            animation: float 20s infinite linear;
+        }
+
+        .shape1 { width: 80px; height: 80px; top: 20%; left: 10%; animation-delay: 0s; }
+        .shape2 { width: 120px; height: 120px; top: 60%; right: 15%; animation-delay: -5s; }
+        .shape3 { width: 60px; height: 60px; bottom: 20%; left: 20%; animation-delay: -10s; }
+        .shape4 { width: 100px; height: 100px; top: 30%; right: 30%; animation-delay: -15s; }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+            25% { transform: translateY(-20px) rotate(90deg); opacity: 0.9; }
+            50% { transform: translateY(0px) rotate(180deg); opacity: 0.7; }
+            75% { transform: translateY(20px) rotate(270deg); opacity: 0.9; }
+            100% { transform: translateY(0px) rotate(360deg); opacity: 0.7; }
+        }
+
+        @media (max-width: 768px) {
+            .language-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .level-title {
+                font-size: 1.5rem;
+            }
+        }
+                             .navbar {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background-color: #121212;
+      border-bottom: 2px solid #00ff41;
+    }
+    .nav-logo, .nav-link {
+      color: #00ff41;
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: bold;
+      margin-right: 15px;
+    }
+    .nav-link:hover {
+      text-decoration: underline;
+    }
+    .view {
+      display: none;
+      padding: 2rem;
+    }
+    .active {
+      display: block;
+    }
+    </style>
+</head>
+<body>
+       <nav class="navbar">
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo">Home</a>
+  </div>
+  <div>    <a href="login.html" class="nav-logo">Sign In</a></div>
+</nav>
+    <div class="floating-shapes">
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
+        <div class="shape shape3"></div>
+        <div class="shape shape4"></div>
+    </div>
+
+    <!-- ADDITIONAL LANGUAGES SECTION -->
+    <div class="level-section">
+        <h2 class="level-title" style="color: #9b59b6;">💎 SPECIALIZED LANGUAGES</h2>
+        <div class="language-grid">
+            <div class="language-card">
+                <h3 class="language-name">Go</h3>
+                <div class="problems-section">
+                    <h4 class="section-title">LeetCode Problems</h4>
+                    <div class="problem-item">
+                        <span class="problem-number">206.</span>Reverse Linked List <span class="difficulty-badge easy">Easy</span>
+                    </div>
+                    <div class="problem-item">
+                        <span class="problem-number">141.</span>Linked List Cycle <span class="difficulty-badge easy">Easy</span>
+                    </div>
+                    <div class="problem-item">
+                        <span class="problem-number">19.</span>Remove Nth Node From End of List <span class="difficulty-badge medium">Medium</span>
+                    </div>
+                    <div class="problem-item">
+                        <span class="problem-number">125.</span>Valid Palindrome <span class="difficulty-badge easy">Easy</span>
+                    </div>
+                    <div class="problem-item">
+                        <span class="problem-number">167.</span>Two Sum II - Input Array Is Sorted <span class="difficulty-badge easy">Easy</span>
+                    </div>
+                </div>
+                <div class="projects-section">
+                    <h4 class="section-title">Projects</h4>
+                    <div class="project-item">Microservices with Go</div>
+                    <div class="project-item">REST API with Gin</div>
+                    <div class="project-item">Concurrent Web Crawler</div>
+                    <div class="project-item">Container Orchestration Tool</div>
+                </div>
+            </div>
+
+            <div class="language-card">
+                <h3 class="language-name">Rust</h3>
+                <div class="problems-section">
+                    <h4 class="section-title">LeetCode Problems</h4>
+                    <div class="problem-item">
+                        <span class="problem-number">242.</span>Valid Anagram <span class="difficulty-badge easy">Easy</span>
+                    </div>
+                    <div class="problem-item">
+                        <span class="problem-number">217.</span>Contains Duplicate <span class="difficulty-badge easy">Easy</span>
+                    </div>
+                    <div class="problem-item">
+                        <span class="problem-number">238.</span>Product of Array Except Self <span class="difficulty-badge medium">Medium</span>
+                    </div>
+                    <div class="problem-item">
+                        <span class="problem-number">347.</span>Top K Frequent Elements <span class="difficulty-badge medium">Medium</span>
+                    </div>
+                    <div class="problem-item">
+                        <span class="problem-number">36.</span>Valid Sudoku <span class="difficulty-badge medium">Medium</span>
+                    </div>
+                </div>
+                <div class="projects-section">
+                    <h4 class="section-title">Projects</h4>
+                    <div class="project-item">System Programming</div>
+                    <div class="project-item">WebAssembly Module</div>
+                    <div class="project-item">CLI Tools</div>
+                    <div class="project-item">Blockchain in Rust</div>
+                </div>
+            </div>
+
+            <div class="language-card">
+                <h3 class="language-name">Swift</h3>
+                <div class="problems-section">
+                    <h4 class="section-title">LeetCode Problems</h4>
+                    <div class="problem-item">
+                        <span class="problem-number">121.</span>Best Time to Buy and Sell Stock <span class="difficulty-badge easy">Easy</span>
+                    </div>
+                    <div class="problem-item">
+                        <span class="problem-number">53.</span>Maximum Subarray <span class="difficulty-badge medium">Medium</span>
+                    </div>
+                    <div class="problem-item">
+                        <span class="problem-number">152.</span>Maximum Product Subarray <span class="difficulty-badge medium">Medium</span>
+                    </div>
+                    <div class="problem-item">
+                        <span class="problem-number">198.</span>House Robber <span class="difficulty-badge medium">Medium</span>
+                    </div>
+                    <div class="problem-item">
+                        <span class="problem-number">213.</span>House Robber II <span class="difficulty-badge medium">Medium</span>
+                    </div>
+                </div>
+                <div class="projects-section">
+                    <h4 class="section-title">Projects</h4>
+                    <div class="project-item">iOS App Development</div>
+                    <div class="project-item">SwiftUI Applications</div>
+                    <div class="project-item">Core Data Integration</div>
+                    <div class="project-item">AR/VR Applications</div>
+                </div>
+            </div>
+
+            <div class="language-card">
+                <h3 class="language-name">Kotlin</h3>
+                <div class="problems-section">
+                    <h4 class="section-title">LeetCode Problems</h4>
+                    <div class="problem-item">
+                        <span class="problem-number">191.</span>Number of 1 Bits <span class="difficulty-badge easy">Easy</span>
+                    </div>
+                    <div class="problem-item">
+                        <span class="problem-number">190.</span>Reverse Bits <span class="difficulty-badge easy">Easy</span>
+                    </div>
+                    <div class="problem-item">
+                        <span class="problem-number">268.</span>Missing Number <span class="difficulty-badge easy">Easy</span>
+                    </div>
+                    <div class="problem-item">
+                        <span class="problem-number">371.</span>Sum of Two Integers <span class="difficulty-badge medium">Medium</span>
+                    </div>
+                    <div class="problem-item">
+                        <span class="problem-number">7.</span>Reverse Integer <span class="difficulty-badge medium">Medium</span>
+                    </div>
+                </div>
+                <div class="projects-section">
+                    <h4 class="section-title">Projects</h4>
+                    <div class="project-item">Android App Development</div>
+                    <div class="project-item">Kotlin Multiplatform</div>
+                    <div class="project-item">Spring Boot with Kotlin</div>
+                    <div class="project-item">Jetpack Compose UI</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LEARNING PATH SECTION -->
+    <div class="level-section">
+        <h2 class="level-title" style="color: #e74c3c;">📚 LEARNING PATH RECOMMENDATIONS</h2>
+        <div class="language-grid">
+            <div class="language-card">
+                <h3 class="language-name" style="color: #2ecc71;">Month 1-2: Foundation</h3>
+                <div class="problems-section">
+                    <h4 class="section-title">Focus Areas</h4>
+                    <div class="problem-item">Learn basic syntax and data structures</div>
+                    <div class="problem-item">Solve 5-10 easy LeetCode problems daily</div>
+                    <div class="problem-item">Build simple console applications</div>
+                    <div class="problem-item">Understand time/space complexity</div>
+                </div>
+                <div class="projects-section">
+                    <h4 class="section-title">Milestones</h4>
+                    <div class="project-item">Complete 50+ Easy Problems</div>
+                    <div class="project-item">Build 2-3 Basic Projects</div>
+                    <div class="project-item">Master Arrays & Strings</div>
+                </div>
+            </div>
+
+            <div class="language-card">
+                <h3 class="language-name" style="color: #f39c12;">Month 3-6: Growth</h3>
+                <div class="problems-section">
+                    <h4 class="section-title">Focus Areas</h4>
+                    <div class="problem-item">Advanced data structures (Trees, Graphs)</div>
+                    <div class="problem-item">Dynamic Programming basics</div>
+                    <div class="problem-item">System design fundamentals</div>
+                    <div class="problem-item">Medium difficulty problems</div>
+                </div>
+                <div class="projects-section">
+                    <h4 class="section-title">Milestones</h4>
+                    <div class="project-item">Complete 100+ Medium Problems</div>
+                    <div class="project-item">Build Full-Stack Applications</div>
+                    <div class="project-item">Contribute to Open Source</div>
+                </div>
+            </div>
+
+            <div class="language-card">
+                <h3 class="language-name" style="color: #e74c3c;">Month 6+: Mastery</h3>
+                <div class="problems-section">
+                    <h4 class="section-title">Focus Areas</h4>
+                    <div class="problem-item">Hard algorithmic problems</div>
+                    <div class="problem-item">System design interviews</div>
+                    <div class="problem-item">Advanced architectures</div>
+                    <div class="problem-item">Performance optimization</div>
+                </div>
+                <div class="projects-section">
+                    <h4 class="section-title">Milestones</h4>
+                    <div class="project-item">Solve 50+ Hard Problems</div>
+                    <div class="project-item">Build Scalable Systems</div>
+                    <div class="project-item">Tech Leadership Skills</div>
+                </div>
+            </div>
+
+            <div class="language-card">
+                <h3 class="language-name" style="color: #9b59b6;">Pro Tips</h3>
+                <div class="problems-section">
+                    <h4 class="section-title">Best Practices</h4>
+                    <div class="problem-item">Code daily - consistency beats intensity</div>
+                    <div class="problem-item">Explain solutions to others</div>
+                    <div class="problem-item">Review and optimize your code</div>
+                    <div class="problem-item">Join coding communities</div>
+                </div>
+                <div class="projects-section">
+                    <h4 class="section-title">Resources</h4>
+                    <div class="project-item">LeetCode Premium Subscription</div>
+                    <div class="project-item">System Design Primer</div>
+                    <div class="project-item">Coding Interview Books</div>
+                    <div class="project-item">Mock Interview Platforms</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="header" style="margin-top: 40px;">
+        <h2 style="background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1); background-size: 200% 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: gradient 4s ease infinite;">
+            🎯 Your Journey to Coding Mastery Starts Here!
+        </h2>
+        <p class="subtitle">Remember: Every expert was once a beginner. Stay consistent, stay curious! 🚀</p>
+    </div>
+
+    <script>
+        // Add interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.language-card');
+            const problems = document.querySelectorAll('.problem-item, .project-item');
+            
+            // Card tilt effect
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = (y - centerY) / 10;
+                    const rotateY = (centerX - x) / 10;
+                    
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+                });
+            });
+            
+            // Problem item click effects
+            problems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Create ripple effect
+                    const ripple = document.createElement('div');
+                    ripple.style.position = 'absolute';
+                    ripple.style.borderRadius = '50%';
+                    ripple.style.background = 'rgba(0, 212, 255, 0.6)';
+                    ripple.style.transform = 'scale(0)';
+                    ripple.style.animation = 'ripple 0.6s linear';
+                    ripple.style.left = '50%';
+                    ripple.style.top = '50%';
+                    ripple.style.width = '20px';
+                    ripple.style.height = '20px';
+                    ripple.style.marginLeft = '-10px';
+                    ripple.style.marginTop = '-10px';
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+            
+            // Add ripple animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes ripple {
+                    to {
+                        transform: scale(4);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Smooth scrolling for sections
+            const sections = document.querySelectorAll('.level-section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(50px)';
+                section.style.transition = 'all 0.8s ease';
+                observer.observe(section);
+            });
+        });
+    </script>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>Complete Coding Roadmap</h1>
+            <p class="subtitle">From Beginner to Advanced - LeetCode Problems & Projects</p>
+        </div>
+
+        <!-- BEGINNER LEVEL -->
+        <div class="level-section">
+            <h2 class="level-title beginner">🌱 BEGINNER LEVEL</h2>
+            <div class="language-grid">
+                <div class="language-card">
+                    <h3 class="language-name">Python</h3>
+                    <div class="problems-section">
+                        <h4 class="section-title">LeetCode Problems</h4>
+                        <div class="problem-item">
+                            <span class="problem-number">1.</span>Two Sum <span class="difficulty-badge easy">Easy</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">9.</span>Palindrome Number <span class="difficulty-badge easy">Easy</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">13.</span>Roman to Integer <span class="difficulty-badge easy">Easy</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">20.</span>Valid Parentheses <span class="difficulty-badge easy">Easy</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">21.</span>Merge Two Sorted Lists <span class="difficulty-badge easy">Easy</span>
+                        </div>
+                    </div>
+                    <div class="projects-section">
+                        <h4 class="section-title">Projects</h4>
+                        <div class="project-item">Calculator with GUI</div>
+                        <div class="project-item">To-Do List App</div>
+                        <div class="project-item">Password Generator</div>
+                        <div class="project-item">Number Guessing Game</div>
+                    </div>
+                </div>
+
+                <div class="language-card">
+                    <h3 class="language-name">Java</h3>
+                    <div class="problems-section">
+                        <h4 class="section-title">LeetCode Problems</h4>
+                        <div class="problem-item">
+                            <span class="problem-number">26.</span>Remove Duplicates from Sorted Array <span class="difficulty-badge easy">Easy</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">27.</span>Remove Element <span class="difficulty-badge easy">Easy</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">35.</span>Search Insert Position <span class="difficulty-badge easy">Easy</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">58.</span>Length of Last Word <span class="difficulty-badge easy">Easy</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">66.</span>Plus One <span class="difficulty-badge easy">Easy</span>
+                        </div>
+                    </div>
+                    <div class="projects-section">
+                        <h4 class="section-title">Projects</h4>
+                        <div class="project-item">Banking System</div>
+                        <div class="project-item">Student Management System</div>
+                        <div class="project-item">Library Management</div>
+                        <div class="project-item">Simple ATM Simulator</div>
+                    </div>
+                </div>
+
+                <div class="language-card">
+                    <h3 class="language-name">JavaScript</h3>
+                    <div class="problems-section">
+                        <h4 class="section-title">LeetCode Problems</h4>
+                        <div class="problem-item">
+                            <span class="problem-number">67.</span>Add Binary <span class="difficulty-badge easy">Easy</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">69.</span>Sqrt(x) <span class="difficulty-badge easy">Easy</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">70.</span>Climbing Stairs <span class="difficulty-badge easy">Easy</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">83.</span>Remove Duplicates from Sorted List <span class="difficulty-badge easy">Easy</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">88.</span>Merge Sorted Array <span class="difficulty-badge easy">Easy</span>
+                        </div>
+                    </div>
+                    <div class="projects-section">
+                        <h4 class="section-title">Projects</h4>
+                        <div class="project-item">Interactive Website</div>
+                        <div class="project-item">Weather App</div>
+                        <div class="project-item">Quiz Game</div>
+                        <div class="project-item">Digital Clock</div>
+                    </div>
+                </div>
+
+                <div class="language-card">
+                    <h3 class="language-name">C++</h3>
+                    <div class="problems-section">
+                        <h4 class="section-title">LeetCode Problems</h4>
+                        <div class="problem-item">
+                            <span class="problem-number">100.</span>Same Tree <span class="difficulty-badge easy">Easy</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">101.</span>Symmetric Tree <span class="difficulty-badge easy">Easy</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">104.</span>Maximum Depth of Binary Tree <span class="difficulty-badge easy">Easy</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">108.</span>Convert Sorted Array to Binary Search Tree <span class="difficulty-badge easy">Easy</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">110.</span>Balanced Binary Tree <span class="difficulty-badge easy">Easy</span>
+                        </div>
+                    </div>
+                    <div class="projects-section">
+                        <h4 class="section-title">Projects</h4>
+                        <div class="project-item">Console Games (Tic-Tac-Toe)</div>
+                        <div class="project-item">File Management System</div>
+                        <div class="project-item">Basic Data Structures</div>
+                        <div class="project-item">Simple Compiler</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- INTERMEDIATE LEVEL -->
+        <div class="level-section">
+            <h2 class="level-title intermediate">🚀 INTERMEDIATE LEVEL</h2>
+            <div class="language-grid">
+                <div class="language-card">
+                    <h3 class="language-name">Python</h3>
+                    <div class="problems-section">
+                        <h4 class="section-title">LeetCode Problems</h4>
+                        <div class="problem-item">
+                            <span class="problem-number">3.</span>Longest Substring Without Repeating Characters <span class="difficulty-badge medium">Medium</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">5.</span>Longest Palindromic Substring <span class="difficulty-badge medium">Medium</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">11.</span>Container With Most Water <span class="difficulty-badge medium">Medium</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">15.</span>3Sum <span class="difficulty-badge medium">Medium</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">22.</span>Generate Parentheses <span class="difficulty-badge medium">Medium</span>
+                        </div>
+                    </div>
+                    <div class="projects-section">
+                        <h4 class="section-title">Projects</h4>
+                        <div class="project-item">Web Scraper</div>
+                        <div class="project-item">API Development (Flask/Django)</div>
+                        <div class="project-item">Data Analysis Dashboard</div>
+                        <div class="project-item">Machine Learning Model</div>
+                    </div>
+                </div>
+
+                <div class="language-card">
+                    <h3 class="language-name">Java</h3>
+                    <div class="problems-section">
+                        <h4 class="section-title">LeetCode Problems</h4>
+                        <div class="problem-item">
+                            <span class="problem-number">33.</span>Search in Rotated Sorted Array <span class="difficulty-badge medium">Medium</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">34.</span>Find First and Last Position of Element <span class="difficulty-badge medium">Medium</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">39.</span>Combination Sum <span class="difficulty-badge medium">Medium</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">46.</span>Permutations <span class="difficulty-badge medium">Medium</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">48.</span>Rotate Image <span class="difficulty-badge medium">Medium</span>
+                        </div>
+                    </div>
+                    <div class="projects-section">
+                        <h4 class="section-title">Projects</h4>
+                        <div class="project-item">E-commerce Application</div>
+                        <div class="project-item">Chat Application</div>
+                        <div class="project-item">Spring Boot REST API</div>
+                        <div class="project-item">Multi-threaded Server</div>
+                    </div>
+                </div>
+
+                <div class="language-card">
+                    <h3 class="language-name">JavaScript</h3>
+                    <div class="problems-section">
+                        <h4 class="section-title">LeetCode Problems</h4>
+                        <div class="problem-item">
+                            <span class="problem-number">49.</span>Group Anagrams <span class="difficulty-badge medium">Medium</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">55.</span>Jump Game <span class="difficulty-badge medium">Medium</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">56.</span>Merge Intervals <span class="difficulty-badge medium">Medium</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">62.</span>Unique Paths <span class="difficulty-badge medium">Medium</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">73.</span>Set Matrix Zeroes <span class="difficulty-badge medium">Medium</span>
+                        </div>
+                    </div>
+                    <div class="projects-section">
+                        <h4 class="section-title">Projects</h4>
+                        <div class="project-item">React/Vue Full-Stack App</div>
+                        <div class="project-item">Real-time Chat App</div>
+                        <div class="project-item">Node.js Backend API</div>
+                        <div class="project-item">Progressive Web App</div>
+                    </div>
+                </div>
+
+                <div class="language-card">
+                    <h3 class="language-name">C++</h3>
+                    <div class="problems-section">
+                        <h4 class="section-title">LeetCode Problems</h4>
+                        <div class="problem-item">
+                            <span class="problem-number">75.</span>Sort Colors <span class="difficulty-badge medium">Medium</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">78.</span>Subsets <span class="difficulty-badge medium">Medium</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">79.</span>Word Search <span class="difficulty-badge medium">Medium</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">90.</span>Subsets II <span class="difficulty-badge medium">Medium</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">91.</span>Decode Ways <span class="difficulty-badge medium">Medium</span>
+                        </div>
+                    </div>
+                    <div class="projects-section">
+                        <h4 class="section-title">Projects</h4>
+                        <div class="project-item">Game Engine</div>
+                        <div class="project-item">Database Management System</div>
+                        <div class="project-item">Network Programming</div>
+                        <div class="project-item">Algorithm Visualizer</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADVANCED LEVEL -->
+        <div class="level-section">
+            <h2 class="level-title advanced">🔥 ADVANCED LEVEL</h2>
+            <div class="language-grid">
+                <div class="language-card">
+                    <h3 class="language-name">Python</h3>
+                    <div class="problems-section">
+                        <h4 class="section-title">LeetCode Problems</h4>
+                        <div class="problem-item">
+                            <span class="problem-number">4.</span>Median of Two Sorted Arrays <span class="difficulty-badge hard">Hard</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">10.</span>Regular Expression Matching <span class="difficulty-badge hard">Hard</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">23.</span>Merge k Sorted Lists <span class="difficulty-badge hard">Hard</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">25.</span>Reverse Nodes in k-Group <span class="difficulty-badge hard">Hard</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">32.</span>Longest Valid Parentheses <span class="difficulty-badge hard">Hard</span>
+                        </div>
+                    </div>
+                    <div class="projects-section">
+                        <h4 class="section-title">Projects</h4>
+                        <div class="project-item">Distributed System</div>
+                        <div class="project-item">AI/ML Production System</div>
+                        <div class="project-item">Blockchain Implementation</div>
+                        <div class="project-item">High-Performance Computing</div>
+                    </div>
+                </div>
+
+                <div class="language-card">
+                    <h3 class="language-name">Java</h3>
+                    <div class="problems-section">
+                        <h4 class="section-title">LeetCode Problems</h4>
+                        <div class="problem-item">
+                            <span class="problem-number">37.</span>Sudoku Solver <span class="difficulty-badge hard">Hard</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">41.</span>First Missing Positive <span class="difficulty-badge hard">Hard</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">42.</span>Trapping Rain Water <span class="difficulty-badge hard">Hard</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">44.</span>Wildcard Matching <span class="difficulty-badge hard">Hard</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">51.</span>N-Queens <span class="difficulty-badge hard">Hard</span>
+                        </div>
+                    </div>
+                    <div class="projects-section">
+                        <h4 class="section-title">Projects</h4>
+                        <div class="project-item">Microservices Architecture</div>
+                        <div class="project-item">Enterprise Application</div>
+                        <div class="project-item">Concurrent Systems</div>
+                        <div class="project-item">Custom Framework</div>
+                    </div>
+                </div>
+
+                <div class="language-card">
+                    <h3 class="language-name">JavaScript</h3>
+                    <div class="problems-section">
+                        <h4 class="section-title">LeetCode Problems</h4>
+                        <div class="problem-item">
+                            <span class="problem-number">57.</span>Insert Interval <span class="difficulty-badge hard">Hard</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">65.</span>Valid Number <span class="difficulty-badge hard">Hard</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">68.</span>Text Justification <span class="difficulty-badge hard">Hard</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">72.</span>Edit Distance <span class="difficulty-badge hard">Hard</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">76.</span>Minimum Window Substring <span class="difficulty-badge hard">Hard</span>
+                        </div>
+                    </div>
+                    <div class="projects-section">
+                        <h4 class="section-title">Projects</h4>
+                        <div class="project-item">Full-Stack Platform</div>
+                        <div class="project-item">Real-time Collaboration Tool</div>
+                        <div class="project-item">Advanced Frontend Framework</div>
+                        <div class="project-item">Performance Optimization Tool</div>
+                    </div>
+                </div>
+
+                <div class="language-card">
+                    <h3 class="language-name">C++</h3>
+                    <div class="problems-section">
+                        <h4 class="section-title">LeetCode Problems</h4>
+                        <div class="problem-item">
+                            <span class="problem-number">84.</span>Largest Rectangle in Histogram <span class="difficulty-badge hard">Hard</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">85.</span>Maximal Rectangle <span class="difficulty-badge hard">Hard</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">87.</span>Scramble String <span class="difficulty-badge hard">Hard</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">95.</span>Unique Binary Search Trees II <span class="difficulty-badge medium">Medium</span>
+                        </div>
+                        <div class="problem-item">
+                            <span class="problem-number">97.</span>Interleaving String <span class="difficulty-badge medium">Medium</span>
+                        </div>
+                    </div>
+                    <div class="projects-section">
+                        <h4 class="section-title">Projects</h4>
+                        <div class="project-item">Operating System Kernel</div>
+                        <div class="project-item">3D Graphics Engine</div>
+                        <div class="project-item">High-Frequency Trading System</div>
+                        <div class="project-item">Embedded Systems</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

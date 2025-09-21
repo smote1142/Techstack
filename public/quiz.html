@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeMaster - Programming Quizzes & Certificates</title>
+    <style>
+                    .navbar {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background-color: #121212;
+      border-bottom: 2px solid #00ff41;
+    }
+    .nav-logo, .nav-link {
+      color: #00ff41;
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: bold;
+      margin-right: 15px;
+    }
+    .nav-link:hover {
+      text-decoration: underline;
+    }
+    .view {
+      display: none;
+      padding: 2rem;
+    }
+    .active {
+      display: block;
+    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            background-image: 
+                radial-gradient(circle at 25% 25%, #1a1a2e 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, #16213e 0%, transparent 50%),
+                linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 50px 0;
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8), rgba(45, 45, 45, 0.6));
+            border-radius: 25px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            animation: fadeInDown 1s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            animation: headerShimmer 3s infinite;
+        }
+
+        .header h1 {
+            font-size: 4rem;
+            background: linear-gradient(135deg, #00d4ff, #7b68ee, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .header p {
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 30px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 30px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .stat-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 212, 255, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.8rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #00d4ff, #7b68ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+
+        .feature-section {
+            margin-bottom: 60px;
+        }
+
+        .feature-title {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #ff6b6b, #feca57, #48dbfb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            margin-bottom: 20px;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        .feature-description {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            margin-bottom: 50px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        .slideshow-container {
+            position: relative;
+            max-width: 100%;
+            margin: 50px auto;
+            border-radius: 25px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .slide {
+            display: none;
+            padding: 80px 60px;
+            text-align: center;
+            min-height: 450px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.9), rgba(40, 40, 40, 0.7));
+            animation: slideIn 1s ease-in-out;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(0, 212, 255, 0.05) 50%, transparent 70%);
+            animation: slideBackground 4s ease-in-out infinite;
+        }
+
+        .slide h3 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #00d4ff, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 25px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .slide p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+            max-width: 650px;
+            margin: 0 auto 35px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .certificate-preview {
+            width: 250px;
+            height: 180px;
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+            border-radius: 20px;
+            margin: 25px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.4rem;
+            font-weight: bold;
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+            animation: float 4s ease-in-out infinite;
+            z-index: 2;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .certificate-preview:hover {
+            transform: scale(1.05) rotateY(10deg);
+            box-shadow: 0 20px 45px rgba(102, 126, 234, 0.4);
+        }
+
+        .navigation-dots {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .dot {
+            height: 12px;
+            width: 12px;
+            margin: 0 10px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .dot::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            background: linear-gradient(135deg, #00d4ff, #7b68ee);
+            border-radius: 50%;
+            transition: all 0.4s ease;
+        }
+
+        .dot:hover::before,
+        .dot.active::before {
+            width: 20px;
+            height: 20px;
+        }
+
+        .dot:hover,
+        .dot.active {
+            background: transparent;
+        }
+
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 35px;
+            margin-bottom: 60px;
+        }
+
+        .quiz-card {
+            background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+            border-radius: 25px;
+            padding: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .quiz-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            transition: left 0.8s ease;
+        }
+
+        .quiz-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(123, 104, 238, 0.05));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .quiz-card:hover::before {
+            left: 100%;
+        }
+
+        .quiz-card:hover::after {
+            opacity: 1;
+        }
+
+        .quiz-card:hover {
+            transform: translateY(-20px) scale(1.03);
+            box-shadow: 0 35px 60px rgba(0, 212, 255, 0.2);
+            border-color: rgba(0, 212, 255, 0.3);
+        }
+
+        .quiz-icon {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, #ff6b6b, #feca57, #48dbfb);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            color: white;
+            transition: all 0.5s ease;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+            z-index: 2;
+            position: relative;
+        }
+
+        .quiz-card:hover .quiz-icon {
+            transform: rotate(360deg) scale(1.15);
+            box-shadow: 0 12px 35px rgba(255, 107, 107, 0.5);
+        }
+
+        .quiz-card h3 {
+            font-size: 1.6rem;
+            color: #ffffff;
+            margin-bottom: 18px;
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+
+        .quiz-card p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.7;
+            margin-bottom: 25px;
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+
+        .quiz-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.6);
+            z-index: 2;
+            position: relative;
+        }
+
+        .difficulty {
+            padding: 6px 16px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .easy { 
+            background: linear-gradient(135deg, #00b894, #00cec9); 
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 184, 148, 0.3);
+        }
+        .medium { 
+            background: linear-gradient(135deg, #fdcb6e, #e17055); 
+            color: white;
+            box-shadow: 0 4px 15px rgba(253, 203, 110, 0.3);
+        }
+        .hard { 
+            background: linear-gradient(135deg, #fd79a8, #e84393); 
+            color: white;
+            box-shadow: 0 4px 15px rgba(253, 121, 168, 0.3);
+        }
+
+        .quiz-button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .quiz-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(0, 212, 255, 0.2));
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.8s ease, height 0.8s ease;
+        }
+
+        .quiz-button:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .quiz-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+            background: linear-gradient(135deg, #764ba2, #667eea);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 35px;
+            margin-top: 60px;
+        }
+
+        .feature-card {
+            background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.05), rgba(72, 219, 251, 0.05));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px) rotateX(5deg);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            border-color: rgba(0, 212, 255, 0.3);
+        }
+
+        .feature-card h4 {
+            font-size: 1.4rem;
+            background: linear-gradient(135deg, #ff6b6b, #48dbfb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 18px;
+        }
+
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.7;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotateY(0deg); }
+            25% { transform: translateY(-8px) rotateY(5deg); }
+            50% { transform: translateY(-15px) rotateY(0deg); }
+            75% { transform: translateY(-8px) rotateY(-5deg); }
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 30px rgba(0, 212, 255, 0.3); }
+            100% { text-shadow: 0 0 40px rgba(123, 104, 238, 0.5), 0 0 60px rgba(0, 212, 255, 0.3); }
+        }
+
+        @keyframes titleGlow {
+            0% { filter: drop-shadow(0 0 10px rgba(255, 107, 107, 0.3)); }
+            100% { filter: drop-shadow(0 0 20px rgba(72, 219, 251, 0.5)); }
+        }
+
+        @keyframes headerShimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes slideBackground {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2.8rem; }
+            .header p { font-size: 1.2rem; }
+            .stats { flex-direction: column; gap: 25px; }
+            .quiz-grid { grid-template-columns: 1fr; }
+            .slide { padding: 50px 30px; }
+            .features-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+ <nav class="navbar">
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo">Home</a>
+  </div>
+     <div class="nav-left">
+    <a href="login.html" class="nav-logo">Sign in</a>
+  </div>
+</nav>
+    <div class="container">
+       
+
+ 
+
+
+        <div class="feature-section">
+            <h3 class="feature-title">Popular Programming Quizzes</h3>
+            <p class="feature-description">Test your knowledge with interactive quizzes and earn verified certificates with unique IDs to showcase your programming skills to employers.</p>
+
+            <div class="quiz-grid">
+                <div class="quiz-card">
+                    <div class="quiz-icon">🐍</div>
+                    <h3>Python Fundamentals</h3>
+                    <p>Master Python basics including variables, data types, control structures, functions, and object-oriented programming concepts.</p>
+                    <div class="quiz-meta">
+                        <span>50 Questions</span>
+                        <span class="difficulty easy">Beginner</span>
+                    </div>
+                    <button class="quiz-button">
+                        <a href="python-quiz.html" class="quiz-button">Start Quiz</a></button>
+                </div>
+
+                <div class="quiz-card">
+                    <div class="quiz-icon">☕</div>
+                    <h3>Java Programming</h3>
+                    <p>Comprehensive Java quiz covering OOP concepts, collections, multithreading, and advanced enterprise development topics.</p>
+                    <div class="quiz-meta">
+                        <span>75 Questions</span>
+                        <span class="difficulty medium">Intermediate</span>
+                    </div>
+                    <button class="quiz-button"> <a href="java-quiz.html" class="quiz-button">Start Quiz</a></button>
+                </div>
+
+                <div class="quiz-card">
+                    <div class="quiz-icon">⚛️</div>
+                    <h3>React Development</h3>
+                    <p>Test your React knowledge including hooks, state management, component lifecycle, Redux, and modern development patterns.</p>
+                    <div class="quiz-meta">
+                        <span>60 Questions</span>
+                        <span class="difficulty medium">Intermediate</span>
+                    </div>
+                    <button class="quiz-button"><a href="react-quiz.html" class="quiz-button">Start Quiz</a></button>
+                </div>
+
+                <div class="quiz-card">
+                    <div class="quiz-icon">💻</div>
+                    <h3>JavaScript Mastery</h3>
+                    <p>Advanced JavaScript concepts including closures, promises, async/await, ES6+ features, and performance optimization techniques.</p>
+                    <div class="quiz-meta">
+                        <span>80 Questions</span>
+                        <span class="difficulty hard">Advanced</span>
+                    </div>
+                    <button class="quiz-button"><a href="javascript-quiz.html" class="quiz-button">Start Quiz</a></button>
+                </div>
+
+                <div class="quiz-card">
+                    <div class="quiz-icon">🗄️</div>
+                    <h3>SQL Database</h3>
+                    <p>Database management, complex queries, joins, indexing, stored procedures, and advanced optimization techniques.</p>
+                    <div class="quiz-meta">
+                        <span>45 Questions</span>
+                        <span class="difficulty medium">Intermediate</span>
+                    </div>
+                    <button class="quiz-button"><a href="db-quiz.html" class="quiz-button">Start Quiz</a></button>
+                </div>
+
+                <div class="quiz-card">
+                    <div class="quiz-icon">🌐</div>
+                    <h3>Full-Stack Development</h3>
+                    <p>Comprehensive web development covering HTML5, CSS3, JavaScript, Node.js, databases, and modern deployment strategies.</p>
+                    <div class="quiz-meta">
+                        <span>90 Questions</span>
+                        <span class="difficulty hard">Advanced</span>
+                    </div>
+                    <button class="quiz-button"><a href="full-quiz.html" class="quiz-button">Start Quiz</a></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="features-grid">
+        
+            <div class="feature-card">
+                <h4>⚡ Instant Results</h4>
+                <p>Get immediate feedback on your performance with detailed explanations, code examples, and personalized improvement suggestions.</p>
+            </div>
+            <div class="feature-card">
+                <h4>🔄 Unlimited Attempts</h4>
+                <p>Practice as many times as you want with adaptive difficulty. Our AI learns from your mistakes to provide targeted learning experiences.</p>
+            </div>
+            <div class="feature-card">
+                <h4>📱 Cross-Platform</h4>
+                <p>Take quizzes on any device with seamless synchronization. Continue your learning journey anywhere, anytime with offline support.</p>
+            </div>
+        </div>
+    </div>
+
+    
+</body>
+</html>

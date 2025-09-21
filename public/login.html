@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Auth Panel</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      height: 100vh;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      animation: backgroundSlide 20s infinite alternate;
+    }
+
+    @keyframes backgroundSlide {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    .auth-container {
+      width: 800px;
+      height: 500px;
+      display: flex;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+      background: #111;
+      position: relative;
+      transition: 0.3s ease;
+    }
+
+    .auth-section {
+      width: 50%;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      color: #00ffff;
+      transition: 0.3s ease;
+    }
+
+    .signup-section {
+      background: linear-gradient(135deg, #0f2027, #203a43);
+    }
+
+    .signin-section {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+    }
+
+    .form-container {
+      width: 100%;
+      max-width: 300px;
+      opacity: 1;
+      transition: 0.3s ease-in-out;
+      z-index: 2;
+    }
+
+    .auth-message {
+      position: absolute;
+      bottom: 30px;
+      color: #00ffffaa;
+      font-size: 16px;
+      opacity: 0;
+      transition: 0.3s ease;
+      z-index: 1;
+    }
+
+    /* Hide opposite forms & show message */
+    .auth-container.hover-left .signin-section .form-container,
+    .auth-container.hover-right .signup-section .form-container {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .auth-container.hover-left .signin-section .auth-message,
+    .auth-container.hover-right .signup-section .auth-message {
+      opacity: 1;
+    }
+
+    /* Neon Border on Hover */
+    .auth-container.hover-left .signup-section,
+    .auth-container.hover-right .signin-section {
+      box-shadow: inset 0 0 40px rgba(0, 255, 255, 0.3);
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #00ffff;
+      background: #000;
+      color: #00ffff;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    input::placeholder {
+      color: #00ffff88;
+    }
+
+    input:focus {
+      border-color: #00ffff;
+      box-shadow: 0 0 8px #00ffff55;
+    }
+
+    .submit-btn {
+      padding: 12px;
+      background: #000;
+      border: 2px solid #00ffff;
+      border-radius: 8px;
+      color: #00ffff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background: #00ffff22;
+    }
+
+    @media screen and (max-width: 768px) {
+      .auth-container {
+        flex-direction: column;
+        height: auto;
+        width: 90%;
+      }
+
+      .auth-section {
+        width: 100%;
+        height: 50%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="auth-container" id="authContainer">
+    <!-- Sign Up Section -->
+    <div class="auth-section signup-section">
+      <div class="form-container">
+        <h2>Sign Up</h2>
+       <form id="signupForm">
+  <input type="text" placeholder="Full Name" name="name" required />
+  <input type="email" placeholder="Email" name="email" required />
+  <input type="password" placeholder="Create Password" name="password" required />
+  <button type="submit" class="submit-btn">Register</button>
+</form>
+
+      </div>
+      <div class="auth-message">You can login here.</div>
+    </div>
+
+    <!-- Sign In Section -->
+    <div class="auth-section signin-section">
+      <div class="form-container">
+        <h2>Sign In</h2>
+       <form id="loginForm">
+  <input type="email" placeholder="Email" name="email" required />
+  <input type="password" placeholder="Password" name="password" required />
+  <button type="submit" class="submit-btn">Login</button>
+</form>
+
+      </div>
+      <div class="auth-message">You can register here.</div>
+    </div>
+  </div>
+
+  <script>
+    const authContainer = document.getElementById("authContainer");
+
+    authContainer.addEventListener("mousemove", (e) => {
+      const rect = authContainer.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const width = rect.width;
+
+      if (x < width / 2) {
+        authContainer.classList.add("hover-left");
+        authContainer.classList.remove("hover-right");
+      } else {
+        authContainer.classList.add("hover-right");
+        authContainer.classList.remove("hover-left");
+      }
+    });
+
+    authContainer.addEventListener("mouseleave", () => {
+      authContainer.classList.remove("hover-left", "hover-right");
+    });
+  </script>
+  <script src="https://cdn.jotfor.ms/agent/embedjs/0197ff504405726a932d4f25a9ac27fbb462/embed.js?skipWelcome=1&maximizable=1"></script>
+<script>
+  // Signup Handler
+  document.getElementById('signupForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const name = this.name.value;
+    const email = this.email.value;
+    const password = this.password.value;
+
+    try {
+      const response = await fetch('http://localhost:3000/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password }),
+        credentials: 'include'
+      });
+
+      const data = await response.json();
+      alert(data.message);
+    } catch (err) {
+      alert('Something went wrong during registration!');
+    }
+  });
+
+  // Login Handler
+  document.getElementById('loginForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const email = this.email.value;
+    const password = this.password.value;
+
+    try {
+      const response = await fetch('http://localhost:3000/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+        credentials: 'include'
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        // ✅ Hardcoded admin check
+        if (email === 'admin@example.com' && password === 'admin123') {
+          window.location.href = 'admindashboard.html';
+        } else {
+          window.location.href = 'authenticated.html';
+        }
+      } else {
+        alert(data.message);
+      }
+    } catch (err) {
+      alert('Something went wrong during login!');
+    }
+  });
+</script>
+
+
+
+</body>
+</html>

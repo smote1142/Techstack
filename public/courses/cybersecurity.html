@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Web Development Course</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+      .header h1 {
+    font-size: 3.5rem;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+    background-clip: text;                /* Standard property */
+    -webkit-background-clip: text;        /* WebKit-specific for Chrome/Safari */
+    -webkit-text-fill-color: transparent; /* Makes gradient visible in text */
+    margin-bottom: 10px;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 5px rgba(78, 205, 196, 0.3)); }
+            to { filter: drop-shadow(0 0 20px rgba(78, 205, 196, 0.6)); }
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            color: #b0b0b0;
+            margin-top: 15px;
+        }
+
+        .course-content {
+            display: grid;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .module {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .module:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(78, 205, 196, 0.2);
+            border-color: rgba(78, 205, 196, 0.3);
+        }
+
+        .module h2 {
+            color: #4ecdc4;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .module-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .topic {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid #4ecdc4;
+            transition: all 0.3s ease;
+        }
+
+        .topic:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(10px);
+        }
+
+        .topic h3 {
+            color: #45b7d1;
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+        }
+
+        .topic ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .topic li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #c0c0c0;
+            transition: color 0.3s ease;
+        }
+
+        .topic li:before {
+            content: "▶";
+            position: absolute;
+            left: 0;
+            color: #4ecdc4;
+            font-size: 0.8rem;
+        }
+
+        .topic li:hover {
+            color: #ffffff;
+        }
+
+        .code-example {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 1px solid #333;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-example:before {
+            content: "CODE";
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 0.7rem;
+            color: #4ecdc4;
+            opacity: 0.7;
+        }
+
+        .code-example code {
+            color: #f8f8f2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .quiz-section {
+            text-align: center;
+            margin-top: 50px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .quiz-btn {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 25px rgba(78, 205, 196, 0.3);
+        }
+
+        .quiz-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(78, 205, 196, 0.5);
+            filter: brightness(1.1);
+        }
+
+        .quiz-btn:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            animation: loading 3s ease-in-out infinite;
+        }
+
+        @keyframes loading {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+
+        .floating-shapes {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(78, 205, 196, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .module {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar"></div>
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>🔐 Cybersecurity</h1>
+            <p>Learn how to protect systems, networks, and data from cyber threats through hands-on experience with security tools and practices.</p>
+        </div>
+
+        <div class="course-content">
+            <div class="module">
+                <h2><div class="module-icon">🛡️</div>Introduction to Cybersecurity</h2>
+                <div class="topic">
+                    <h3>What is Cybersecurity?</h3>
+                    <ul>
+                        <li>Overview of Cybersecurity</li>
+                        <li>Importance of Cybersecurity in the Digital World</li>
+                        <li>Key Concepts: CIA Triad (Confidentiality, Integrity, Availability)</li>
+                    </ul>
+                </div>
+                <div class="topic">
+                    <h3>Cybersecurity Threats</h3>
+                    <ul>
+                        <li>Malware: Viruses, Worms, Trojans</li>
+                        <li>Phishing, Spear Phishing</li>
+                        <li>Denial of Service (DoS) and Distributed DoS (DDoS)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">🔒</div>Network Security</h2>
+                <div class="topic">
+                    <h3>Network Security Basics</h3>
+                    <ul>
+                        <li>Network Architecture and Protocols</li>
+                        <li>Firewalls, VPNs, and Proxy Servers</li>
+                        <li>Network Segmentation and Isolation</li>
+                    </ul>
+                </div>
+                <div class="topic">
+                    <h3>Intrusion Detection and Prevention Systems (IDPS)</h3>
+                    <ul>
+                        <li>Types of Intrusion Detection Systems</li>
+                        <li>Implementing Network Monitoring</li>
+                        <li>IDS vs IPS</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">🔑</div>Cryptography</h2>
+                <div class="topic">
+                    <h3>Introduction to Cryptography</h3>
+                    <ul>
+                        <li>Encryption and Decryption</li>
+                        <li>Symmetric vs Asymmetric Encryption</li>
+                        <li>Public Key Infrastructure (PKI)</li>
+                    </ul>
+                </div>
+                <div class="topic">
+                    <h3>Hashing and Digital Signatures</h3>
+                    <ul>
+                        <li>Hash Functions: MD5, SHA</li>
+                        <li>Creating Digital Signatures</li>
+                        <li>SSL/TLS and HTTPS</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">⚔️</div>Ethical Hacking & Penetration Testing</h2>
+                <div class="topic">
+                    <h3>Understanding Ethical Hacking</h3>
+                    <ul>
+                        <li>What is Ethical Hacking?</li>
+                        <li>Legal and Ethical Considerations</li>
+                        <li>Types of Penetration Testing</li>
+                    </ul>
+                </div>
+                <div class="topic">
+                    <h3>Penetration Testing Tools</h3>
+                    <ul>
+                        <li>Using Kali Linux for Pen Testing</li>
+                        <li>Popular Tools: Nmap, Metasploit, Burp Suite</li>
+                        <li>Exploiting Vulnerabilities</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">🧑‍💻</div>Security Operations</h2>
+                <div class="topic">
+                    <h3>Security Operations Center (SOC)</h3>
+                    <ul>
+                        <li>Roles and Responsibilities in SOC</li>
+                        <li>Incident Response and Management</li>
+                        <li>Security Monitoring and Logging</li>
+                    </ul>
+                </div>
+                <div class="topic">
+                    <h3>SIEM (Security Information and Event Management)</h3>
+                    <ul>
+                        <li>Overview of SIEM Tools</li>
+                        <li>Log Collection and Analysis</li>
+                        <li>Real-time Threat Detection</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">💻</div>Web Application Security</h2>
+                <div class="topic">
+                    <h3>Common Web Vulnerabilities</h3>
+                    <ul>
+                        <li>Cross-Site Scripting (XSS)</li>
+                        <li>SQL Injection</li>
+                        <li>Cross-Site Request Forgery (CSRF)</li>
+                    </ul>
+                </div>
+                <div class="topic">
+                    <h3>Securing Web Applications</h3>
+                    <ul>
+                        <li>OWASP Top 10</li>
+                        <li>Security Headers and Best Practices</li>
+                        <li>Authentication and Session Management</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">🛡️</div>Incident Response & Forensics</h2>
+                <div class="topic">
+                    <h3>Incident Response Phases</h3>
+                    <ul>
+                        <li>Preparation and Detection</li>
+                        <li>Containment and Eradication</li>
+                        <li>Recovery and Post-Incident Analysis</li>
+                    </ul>
+                </div>
+                <div class="topic">
+                    <h3>Digital Forensics</h3>
+                    <ul>
+                        <li>Forensic Data Acquisition</li>
+                        <li>Analyzing Artifacts and Logs</li>
+                        <li>Tools for Digital Forensics (Autopsy, EnCase)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">🚨</div>Capstone Project</h2>
+                <div class="topic">
+                    <h3>Real-world Cybersecurity Scenario</h3>
+                    <ul>
+                        <li>Conducting a Full Penetration Test</li>
+                        <li>Incident Response Simulation</li>
+                        <li>Securing a Web Application from Vulnerabilities</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="quiz-section">
+            <h2 style="margin-bottom: 20px; color: #4ecdc4;">Test Your Cybersecurity Knowledge!</h2>
+            <p style="margin-bottom: 30px; font-size: 1.2rem; color: #b0b0b0;">
+                Take the quiz to evaluate your understanding of cybersecurity practices and concepts.
+            </p>
+            <a href="/cybersecurity-quiz.html">
+                <button class="quiz-btn">Take Quiz</button>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modules = document.querySelectorAll('.module');
+
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function (entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            modules.forEach(module => {
+                module.style.opacity = '0';
+                module.style.transform = 'translateY(30px)';
+                module.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(module);
+            });
+        });
+    </script>
+</body>
+
+
+
+
+
+
+
+</html>

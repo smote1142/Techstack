@@ -1,0 +1,177 @@
+ /* Profile Dropdown */
+        .profile-dropdown {
+            position: relative;
+            display: inline-block;
+            margin-left: auto;
+        }
+
+        .profile-button {
+            background: linear-gradient(45deg, #00d4ff, #ff00aa);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .profile-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.4);
+        }
+
+        .profile-button::after {
+            content: "▼";
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-button.active::after {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            min-width: 350px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            margin-top: 10px;
+        }
+
+        .dropdown-content.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-header h3 {
+            color: #00d4ff;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .dropdown-header p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        .dropdown-section {
+            padding: 1rem 1.5rem;
+        }
+
+        .dropdown-section h4 {
+            color: #ff00aa;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dropdown-section ul {
+            list-style: none;
+            margin-left: 1rem;
+        }
+
+        .dropdown-section li {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            margin: 0.25rem 0;
+            padding: 0.25rem 0;
+        }
+
+        .dropdown-section .stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-section .stat:last-child {
+            border-bottom: none;
+        }
+
+        .stat-value {
+            color: #00d4ff;
+            font-weight: 600;
+        }
+
+        .logout-button {
+            background: rgba(255, 0, 170, 0.2);
+            color: #ff00aa;
+            border: 1px solid #ff00aa;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .logout-button:hover {
+            background: rgba(255, 0, 170, 0.3);
+            transform: translateY(-2px);
+        }
+
+
+
+<nav class="navbar">
+  <div class="nav-left">
+    <a href="authenticated.html" class="nav-logo">Home</a>
+  </div>
+              <div class="profile-dropdown">
+                <button class="profile-button" id="profileBtn">
+                    <span id="profileName">Loading...</span>
+                </button>
+                <div class="dropdown-content" id="dropdownContent">
+                    <div class="dropdown-header">
+                        <h3 id="dropdownName">Loading...</h3>
+                        <p id="dropdownEmail">Loading...</p>
+                    </div>
+                    
+                    
+                    <div class="dropdown-section">
+                        <button class="logout-button" id="logoutBtn">Logout</button>
+                    </div>
+                </div>
+            </div>
+</nav>
+<script>
+        // Profile dropdown functionality
+        const profileBtn = document.getElementById('profileBtn');
+        const dropdownContent = document.getElementById('dropdownContent');
+
+        profileBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            profileBtn.classList.toggle('active');
+            dropdownContent.classList.toggle('show');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!profileBtn.contains(e.target) && !dropdownContent.contains(e.target)) {
+                profileBtn.classList.remove('active');
+                dropdownContent.classList.remove('show');
+            }
+        });
+        </script>
+            <script src="script.js"></script>

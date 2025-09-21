@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Certificate Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
+            min-height: 100vh;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #94a3b8;
+        }
+
+        .form-container {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .form-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            border-color: rgba(251, 191, 36, 0.3);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(15, 23, 42, 0.8);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #e2e8f0;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #fbbf24;
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .form-group input:hover,
+        .form-group select:hover {
+            border-color: rgba(251, 191, 36, 0.5);
+        }
+
+        .generate-btn {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #0f172a;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 20px rgba(251, 191, 36, 0.3);
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(251, 191, 36, 0.4);
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+
+        .generate-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .certificate-container {
+            display: none;
+            margin-top: 3rem;
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        /* Professional Certificate Styles */
+        .certificate {
+            width: 1000px;
+            height: 700px;
+            margin: 0 auto;
+            position: relative;
+            background: #ffffff;
+            border: 8px solid #1a365d;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .certificate:hover {
+            transform: scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Decorative Border Pattern */
+        .certificate::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            border: 3px solid #d4af37;
+            border-radius: 10px;
+            z-index: 1;
+        }
+
+        .certificate::after {
+            content: '';
+            position: absolute;
+            top: 35px;
+            left: 35px;
+            right: 35px;
+            bottom: 35px;
+            border: 1px solid #d4af37;
+            border-radius: 5px;
+            z-index: 1;
+        }
+
+        /* Corner Decorations */
+        .corner-decoration {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            z-index: 2;
+        }
+
+        .corner-decoration.top-left {
+            top: 30px;
+            left: 30px;
+            background: radial-gradient(circle, #d4af37 20%, transparent 70%);
+            clip-path: polygon(0 0, 100% 0, 0 100%);
+        }
+
+        .corner-decoration.top-right {
+            top: 30px;
+            right: 30px;
+            background: radial-gradient(circle, #d4af37 20%, transparent 70%);
+            clip-path: polygon(100% 0, 100% 100%, 0 0);
+        }
+
+        .corner-decoration.bottom-left {
+            bottom: 30px;
+            left: 30px;
+            background: radial-gradient(circle, #d4af37 20%, transparent 70%);
+            clip-path: polygon(0 0, 100% 100%, 0 100%);
+        }
+
+        .corner-decoration.bottom-right {
+            bottom: 30px;
+            right: 30px;
+            background: radial-gradient(circle, #d4af37 20%, transparent 70%);
+            clip-path: polygon(100% 0, 100% 100%, 0 100%);
+        }
+
+        .certificate-content {
+            position: relative;
+            z-index: 3;
+            padding: 2rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            color: #1a365d;
+        }
+
+        .certificate-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .institution-name {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 0.5rem;
+            margin-top: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            z-index: 10;
+            position: relative;
+        }
+
+        .institution-tagline {
+            font-size: 1rem;
+            color: #4a5568;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .certificate-title {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #d4af37;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+        }
+
+        .certificate-subtitle {
+            font-size: 1.8rem;
+            color: #1a365d;
+            margin-bottom: 2rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .certificate-text {
+            font-size: 1.3rem;
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .recipient-name {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #1a365d;
+            margin: 1.5rem 0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid #d4af37;
+            padding-bottom: 0.5rem;
+            font-family: 'Times New Roman', serif;
+        }
+
+        .certificate-achievement {
+            font-size: 1.2rem;
+            color: #2d3748;
+            margin: 1rem 0;
+        }
+
+        .course-name {
+            font-size: 2.2rem;
+            color: #1a365d;
+            margin: 1.5rem 0;
+            font-weight: 600;
+            font-family: 'Times New Roman', serif;
+        }
+
+        .certificate-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem 2rem;
+            border-radius: 0 0 10px 10px;
+            z-index: 20;
+            position: relative;
+            margin-top: 2rem;
+        }
+
+        .date-signature {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 200px;
+            z-index: 10;
+            position: relative;
+        }
+
+        .signature-line {
+            width: 200px;
+            height: 2px;
+            background: #1a365d;
+            margin-bottom: 0.3rem;
+        }
+
+        .signature-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 0.3rem;
+            font-family: 'Brush Script MT', cursive;
+            z-index: 10;
+        }
+
+        .signature-title {
+            font-size: 1rem;
+            color: #4a5568;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 10;
+        }
+
+        .date-value {
+            font-size: 1.1rem;
+            color: #1a365d;
+            font-weight: 600;
+            z-index: 10;
+            margin-bottom: 0.3rem;
+        }
+
+        /* Professional Seal */
+        .certificate-seal {
+            position: absolute;
+            top: 50px;
+            right: 50px;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, #d4af37 0%, #b8941f 70%, #1a365d 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 4;
+            border: 5px solid #1a365d;
+        }
+
+        .seal-inner {
+            width: 110px;
+            height: 110px;
+            background: #1a365d;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+            font-weight: bold;
+            border: 2px solid #d4af37;
+        }
+
+        .seal-text {
+            font-size: 0.8rem;
+            text-align: center;
+            line-height: 1.2;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .seal-year {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-top: 0.2rem;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(16, 185, 129, 0.4);
+        }
+
+        .download-btn:disabled {
+            background: #6b7280;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 1100px) {
+            .certificate {
+                width: 90%;
+                max-width: 800px;
+                height: 560px;
+            }
+
+            .certificate-title {
+                font-size: 3rem;
+            }
+
+            .recipient-name {
+                font-size: 2.2rem;
+            }
+
+            .course-name {
+                font-size: 1.8rem;
+            }
+
+            .certificate-seal {
+                width: 120px;
+                height: 120px;
+                top: 30px;
+                right: 30px;
+            }
+
+            .seal-inner {
+                width: 90px;
+                height: 90px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .certificate {
+                width: 95%;
+                height: 500px;
+            }
+
+            .certificate-content {
+                padding: 2rem 1.5rem;
+            }
+
+            .certificate-title {
+                font-size: 2.5rem;
+            }
+
+            .recipient-name {
+                font-size: 1.8rem;
+            }
+
+            .course-name {
+                font-size: 1.5rem;
+            }
+
+            .certificate-footer {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+                    .navbar {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background-color: #121212;
+      border-bottom: 2px solid #00ff41;
+    }
+    .nav-logo, .nav-link {
+      color: #00ff41;
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: bold;
+      margin-right: 15px;
+    }
+    .nav-link:hover {
+      text-decoration: underline;
+    }
+    .view {
+      display: none;
+      padding: 2rem;
+    }
+    .active {
+      display: block;
+    }
+        
+    </style>
+</head>
+<body>
+     <nav class="navbar">
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo">Home</a>
+  </div>
+  <div>    <a href="login.html" class="nav-logo">Sign In</a></div>
+</nav>
+    <div class="container">
+        <div class="header">
+            <h1>Professional Certificate Generator</h1>
+            <p>Create professional certificates with ease</p>
+        </div>
+
+        <div class="form-container">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" placeholder="Enter full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="courseName">Course Name</label>
+                    <select id="courseName" required>
+                        <option value="">Select Course</option>
+                        <option value="Web Development">Web Development</option>
+                        <option value="Data Science">Data Science</option>
+                        <option value="Machine Learning">Machine Learning</option>
+                        <option value="Digital Marketing">Digital Marketing</option>
+                        <option value="Graphic Design">Graphic Design</option>
+                        <option value="Mobile App Development">Mobile App Development</option>
+                        <option value="Cloud Computing">Cloud Computing</option>
+                        <option value="Cybersecurity">Cybersecurity</option>
+                        <option value="UI/UX Design">UI/UX Design</option>
+                        <option value="Project Management">Project Management</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="issueDate">Issue Date</label>
+                    <input type="date" id="issueDate" required>
+                </div>
+            </div>
+
+            <div style="text-align: center;">
+                <button class="generate-btn" onclick="generateCertificate()">
+                    Generate Certificate
+                </button>
+            </div>
+        </div>
+
+        <div class="certificate-container" id="certificateContainer">
+            <div class="certificate" id="certificate">
+                <!-- Corner Decorations -->
+                <div class="corner-decoration top-left"></div>
+                <div class="corner-decoration top-right"></div>
+                <div class="corner-decoration bottom-left"></div>
+                <div class="corner-decoration bottom-right"></div>
+                
+                <!-- Professional Seal -->
+                <div class="certificate-seal">
+                    <div class="seal-inner">
+                        <div class="seal-text">Excellence<br>in Learning</div>
+                        <div class="seal-year" id="sealYear">2024</div>
+                    </div>
+                </div>
+                
+                <div class="certificate-content">
+                    <div class="certificate-main">
+                        <div class="institution-name">TechEd Institute</div>
+                        <div class="institution-tagline">Empowering Future Leaders</div>
+                        
+                        <h1 class="certificate-title">Certificate</h1>
+                        <p class="certificate-subtitle">of Achievement</p>
+                        
+                        <p class="certificate-text">This is to certify that</p>
+                        
+                        <h2 class="recipient-name" id="certName">Name Here</h2>
+                        
+                        <p class="certificate-achievement">has successfully completed the comprehensive program in</p>
+                        
+                        <h3 class="course-name" id="certCourse">Course Name</h3>
+                        
+                        <p class="certificate-text">demonstrating exceptional dedication, skill mastery, and commitment to excellence</p>
+                    </div>
+                    
+                    <div class="certificate-footer">
+                        <div class="date-signature">
+                            <div class="signature-line"></div>
+                            <div class="signature-name">Snehal M</div>
+                            <div class="signature-title">Director</div>
+                        </div>
+                        
+                        <div class="date-signature">
+                            <div class="date-value" id="certDate">Date</div>
+                            <div class="signature-title">Date of Completion</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="download-btn" id="downloadBtn" onclick="downloadCertificate()">
+                📥 Download Certificate
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Set today's date as default
+        document.getElementById('issueDate').value = new Date().toISOString().split('T')[0];
+
+        function generateCertificate() {
+            const fullName = document.getElementById('fullName').value.trim();
+            const courseName = document.getElementById('courseName').value;
+            const issueDate = document.getElementById('issueDate').value;
+
+            if (!fullName || !courseName || !issueDate) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            // Update certificate content
+            document.getElementById('certName').textContent = fullName;
+            document.getElementById('certCourse').textContent = courseName;
+            
+            // Format date
+            const date = new Date(issueDate);
+            const formattedDate = date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            document.getElementById('certDate').textContent = formattedDate;
+            
+            // Update seal year
+            document.getElementById('sealYear').textContent = date.getFullYear();
+
+            // Show certificate with animation
+            const container = document.getElementById('certificateContainer');
+            container.style.display = 'block';
+            
+            // Scroll to certificate
+            setTimeout(() => {
+                container.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }, 100);
+        }
+
+        function downloadCertificate() {
+            const downloadBtn = document.getElementById('downloadBtn');
+            const certificate = document.getElementById('certificate');
+            
+            // Disable button and show loading
+            downloadBtn.disabled = true;
+            downloadBtn.textContent = '📥 Generating...';
+            
+            // Configure html2canvas options for high quality
+            const options = {
+                scale: 2, // Higher resolution
+                useCORS: true,
+                allowTaint: true,
+                backgroundColor: '#ffffff',
+                width: certificate.offsetWidth,
+                height: certificate.offsetHeight,
+                scrollX: 0,
+                scrollY: 0
+            };
+            
+            html2canvas(certificate, options).then(canvas => {
+                // Create download link
+                const link = document.createElement('a');
+                const recipientName = document.getElementById('certName').textContent;
+                const courseName = document.getElementById('certCourse').textContent;
+                
+                // Set filename
+                link.download = `Certificate_${recipientName.replace(/\s+/g, '_')}_${courseName.replace(/\s+/g, '_')}.png`;
+                
+                // Convert canvas to blob and create download URL
+                canvas.toBlob(blob => {
+                    const url = URL.createObjectURL(blob);
+                    link.href = url;
+                    
+                    // Trigger download
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    // Cleanup
+                    URL.revokeObjectURL(url);
+                    
+                    // Reset button
+                    downloadBtn.disabled = false;
+                    downloadBtn.textContent = '📥 Download Certificate';
+                }, 'image/png', 1.0);
+                
+            }).catch(error => {
+                console.error('Error generating certificate:', error);
+                alert('Error generating certificate. Please try again.');
+                
+                // Reset button
+                downloadBtn.disabled = false;
+                downloadBtn.textContent = '📥 Download Certificate';
+            });
+        }
+
+        // Add interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add typing effect to placeholder
+            const nameInput = document.getElementById('fullName');
+            nameInput.addEventListener('input', function() {
+                if (this.value) {
+                    this.style.borderColor = '#10b981';
+                } else {
+                    this.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                }
+            });
+
+            // Add hover effect to form inputs
+            const inputs = document.querySelectorAll('input, select');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'translateY(-2px)';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

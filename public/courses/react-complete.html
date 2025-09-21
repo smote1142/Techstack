@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <div class="container">
+        <div class="header">
+            <h1>⚛️ Complete React.js Course</h1>
+            <p>Master Modern React Development from Basics to Advanced</p>
+        </div>
+
+        <div class="course-content">
+            <div class="module">
+                <h2><div class="module-icon">⚛️</div>React Fundamentals</h2>
+                
+                <div class="topic">
+                    <h3>Getting Started with React</h3>
+                    <ul>
+                        <li>What is React and Why Use It?</li>
+                        <li>Setting up Development Environment</li>
+                        <li>Create React App</li>
+                        <li>Understanding the Project Structure</li>
+                        <li>JSX Syntax and Rules</li>
+                    </ul>
+                    <div class="code-example">
+                        <code>
+<span class="jsx-comment">// Simple React Component</span><br>
+<span class="jsx-keyword">import</span> React <span class="jsx-keyword">from</span> <span class="jsx-string">'react'</span>;<br><br>
+<span class="jsx-keyword">function</span> <span class="jsx-tag">Welcome</span>() {<br>
+&nbsp;&nbsp;<span class="jsx-keyword">return</span> (<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="jsx-tag">&lt;div&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="jsx-tag">&lt;h1&gt;</span>Hello, React!<span class="jsx-tag">&lt;/h1&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="jsx-tag">&lt;p&gt;</span>Welcome to React development<span class="jsx-tag">&lt;/p&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="jsx-tag">&lt;/div&gt;</span><br>
+&nbsp;&nbsp;);<br>
+}<br><br>
+<span class="jsx-keyword">export default</span> Welcome;
+                        </code>
+                    </div>
+                </div>
+
+                <div class="topic">
+                    <h3>Components and JSX</h3>
+                    <ul>
+                        <li>Function vs Class Components</li>
+                        <li>JSX Elements and Expressions</li>
+                        <li>Component Composition</li>
+                        <li>Rendering Elements</li>
+                        <li>Component Props</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Props and Component Communication</h3>
+                    <ul>
+                        <li>Passing Data with Props</li>
+                        <li>Props Validation with PropTypes</li>
+                        <li>Default Props</li>
+                        <li>Children Props</li>
+                        <li>Props Destructuring</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">🔄</div>State Management</h2>
+                
+                <div class="topic">
+                    <h3>React State Basics</h3>
+                    <ul>
+                        <li>Understanding State vs Props</li>
+                        <li>useState Hook</li>
+                        <li>State Updates and Re-rendering</li>
+                        <li>Multiple State Variables</li>
+                        <li>State Update Patterns</li>
+                    </ul>
+                    <div class="code-example">
+                        <code>
+<span class="jsx-comment">// useState Hook Example</span><br>
+<span class="jsx-keyword">import</span> React, { useState } <span class="jsx-keyword">from</span> <span class="jsx-string">'react'</span>;<br><br>
+<span class="jsx-keyword">function</span> <span class="jsx-tag">Counter</span>() {<br>
+&nbsp;&nbsp;<span class="jsx-keyword">const</span> [count, setCount] = <span class="jsx-keyword">useState</span>(0);<br><br>
+&nbsp;&nbsp;<span class="jsx-keyword">return</span> (<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="jsx-tag">&lt;div&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="jsx-tag">&lt;p&gt;</span>Count: {count}<span class="jsx-tag">&lt;/p&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="jsx-tag">&lt;button</span> <span class="jsx-prop">onClick</span>={() => setCount(count + 1)}<span class="jsx-tag">&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Increment<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="jsx-tag">&lt;/button&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="jsx-tag">&lt;/div&gt;</span><br>
+&nbsp;&nbsp;);<br>
+}
+                        </code>
+                    </div>
+                </div>
+
+                <div class="topic">
+                    <h3>Advanced State Management</h3>
+                    <ul>
+                        <li>useReducer Hook</li>
+                        <li>State Lifting</li>
+                        <li>Context API</li>
+                        <li>Global State Management</li>
+                        <li>State Management Libraries (Redux, Zustand)</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Event Handling</h3>
+                    <ul>
+                        <li>Synthetic Events</li>
+                        <li>Event Handlers</li>
+                        <li>Passing Arguments to Event Handlers</li>
+                        <li>Form Events</li>
+                        <li>Keyboard and Mouse Events</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">🎣</div>React Hooks</h2>
+                
+                <div class="topic">
+                    <h3>Built-in Hooks</h3>
+                    <ul>
+                        <li>useState - State Management</li>
+                        <li>useEffect - Side Effects</li>
+                        <li>useContext - Context Consumption</li>
+                        <li>useReducer - Complex State Logic</li>
+                        <li>useMemo - Performance Optimization</li>
+                        <li>useCallback - Function Memoization</li>
+                    </ul>
+                    <div class="code-example">
+                        <code>
+<span class="jsx-comment">// useEffect Hook Example</span><br>
+<span class="jsx-keyword">import</span> React, { useState, useEffect } <span class="jsx-keyword">from</span> <span class="jsx-string">'react'</span>;<br><br>
+<span class="jsx-keyword">function</span> <span class="jsx-tag">UserProfile</span>({ userId }) {<br>
+&nbsp;&nbsp;<span class="jsx-keyword">const</span> [user, setUser] = <span class="jsx-keyword">useState</span>(null);<br><br>
+&nbsp;&nbsp;<span class="jsx-keyword">useEffect</span>(() => {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="jsx-comment">// Fetch user data</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;fetchUser(userId)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.then(setUser);<br>
+&nbsp;&nbsp;}, [userId]);<br><br>
+&nbsp;&nbsp;<span class="jsx-keyword">return</span> user ? <span class="jsx-tag">&lt;div&gt;</span>{user.name}<span class="jsx-tag">&lt;/div&gt;</span> : <span class="jsx-tag">&lt;div&gt;</span>Loading...<span class="jsx-tag">&lt;/div&gt;</span>;<br>
+}
+                        </code>
+                    </div>
+                </div>
+
+                <div class="topic">
+                    <h3>Custom Hooks</h3>
+                    <ul>
+                        <li>Creating Custom Hooks</li>
+                        <li>Hook Patterns and Best Practices</li>
+                        <li>Sharing Logic Between Components</li>
+                        <li>Testing Custom Hooks</li>
+                        <li>Popular Community Hooks</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Hook Rules and Best Practices</h3>
+                    <ul>
+                        <li>Rules of Hooks</li>
+                        <li>Hook Dependencies</li>
+                        <li>Avoiding Infinite Loops</li>
+                        <li>Performance Considerations</li>
+                        <li>Debugging Hook Issues</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">📝</div>Forms and User Input</h2>
+                
+                <div class="topic">
+                    <h3>Controlled Components</h3>
+                    <ul>
+                        <li>Input Elements and State</li>
+                        <li>Textarea and Select Elements</li>
+                        <li>Handling Multiple Inputs</li>
+                        <li>Form Submission</li>
+                        <li>Input Validation</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Form Libraries</h3>
+                    <ul>
+                        <li>Formik Integration</li>
+                        <li>React Hook Form</li>
+                        <li>Yup Schema Validation</li>
+                        <li>Form State Management</li>
+                        <li>Advanced Form Patterns</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>File Uploads and Media</h3>
+                    <ul>
+                        <li>File Input Handling</li>
+                        <li>Image Preview</li>
+                        <li>Drag and Drop</li>
+                        <li>Progress Indicators</li>
+                        <li>File Validation</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">🛣️</div>React Router</h2>
+                
+                <div class="topic">
+                    <h3>Routing Fundamentals</h3>
+                    <ul>
+                        <li>Setting up React Router</li>
+                        <li>Route Components</li>
+                        <li>Link and NavLink</li>
+                        <li>URL Parameters</li>
+                        <li>Query Strings</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Advanced Routing</h3>
+                    <ul>
+                        <li>Nested Routes</li>
+                        <li>Protected Routes</li>
+                        <li>Route Guards</li>
+                        <li>Programmatic Navigation</li>
+                        <li>Route Transitions</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Router Hooks</h3>
+                    <ul>
+                        <li>useHistory Hook</li>
+                        <li>useLocation Hook</li>
+                        <li>useParams Hook</li>
+                        <li>useRouteMatch Hook</li>
+                        <li>Custom Router Hooks</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">🌐</div>API Integration</h2>
+                
+                <div class="topic">
+                    <h3>HTTP Requests</h3>
+                    <ul>
+                        <li>Fetch API</li>
+                        <li>Axios Integration</li>
+                        <li>Async/Await Patterns</li>
+                        <li>Error Handling</li>
+                        <li>Loading States</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Data Fetching Patterns</h3>
+                    <ul>
+                        <li>useEffect for Data Fetching</li>
+                        <li>Custom Data Fetching Hooks</li>
+                        <li>SWR and React Query</li>
+                        <li>Caching Strategies</li>
+                        <li>Optimistic Updates</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Real-time Data</h3>
+                    <ul>
+                        <li>WebSocket Integration</li>
+                        <li>Server-Sent Events</li>
+                        <li>Real-time Updates</li>
+                        <li>Socket.io with React</li>
+                        <li>Live Data Synchronization</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">🎨</div>Styling and UI</h2>
+                
+                <div class="topic">
+                    <h3>CSS in React</h3>
+                    <ul>
+                        <li>CSS Modules</li>
+                        <li>Styled Components</li>
+                        <li>Emotion</li>
+                        <li>CSS-in-JS Solutions</li>
+                        <li>Dynamic Styling</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>UI Libraries</h3>
+                    <ul>
+                        <li>Material-UI (MUI)</li>
+                        <li>Ant Design</li>
+                        <li>Chakra UI</li>
+                        <li>React Bootstrap</li>
+                        <li>Tailwind CSS with React</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Animations and Transitions</h3>
+                    <ul>
+                        <li>React Transition Group</li>
+                        <li>Framer Motion</li>
+                        <li>React Spring</li>
+                        <li>CSS Animations</li>
+                        <li>Performance Considerations</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">⚡</div>Performance Optimization</h2>
+                
+                <div class="topic">
+                    <h3>React Performance</h3>
+                    <ul>
+                        <li>React.memo</li>
+                        <li>useMemo and useCallback</li>
+                        <li>Code Splitting</li>
+                        <li>Lazy Loading</li>
+                        <li>Bundle Analysis</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Optimization Techniques</h3>
+                    <ul>
+                        <li>Virtual DOM Optimization</li>
+                        <li>List Rendering and Keys</li>
+                        <li>Avoiding Unnecessary Re-renders</li>
+                        <li>Image Optimization</li>
+                        <li>Memory Leak Prevention</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Profiling and Debugging</h3>
+                    <ul>
+                        <li>React DevTools</li>
+                        <li>Performance Profiler</li>
+                        <li>Component Profiling</li>
+                        <li>Performance Metrics</li>
+                        <li>Debugging Techniques</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">🧪</div>Testing React Applications</h2>
+                
+                <div class="topic">
+                    <h3>Testing Fundamentals</h3>
+                    <ul>
+                        <li>Jest Testing Framework</li>
+                        <li>React Testing Library</li>
+                        <li>Unit Testing Components</li>
+                        <li>Testing Props and State</li>
+                        <li>Snapshot Testing</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Advanced Testing</h3>
+                    <ul>
+                        <li>Integration Testing</li>
+                        <li>End-to-End Testing (Cypress)</li>
+                        <li>Mocking API Calls</li>
+                        <li>Testing Hooks</li>
+                        <li>Test Coverage</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Testing Best Practices</h3>
+                    <ul>
+                        <li>Writing Maintainable Tests</li>
+                        <li>Test-Driven Development</li>
+                        <li>Testing Accessibility</li>
+                        <li>Performance Testing</li>
+                        <li>CI/CD Integration</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module">
+                <h2><div class="module-icon">🚀</div>Advanced React Concepts</h2>
+                
+                <div class="topic">
+                    <h3>Advanced Patterns</h3>
+                    <ul>
+                        <li>Higher-Order Components (HOCs)</li>
+                        <li>Render Props Pattern</li>
+                        <li>Compound Components</li>
+                        <li>Control Props Pattern</li>
+                        <li>Provider Pattern</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>React Internals</h3>
+                    <ul>
+                        <li>Reconciliation Algorithm</li>
+                        <li>Fiber Architecture</li>
+                        <li>Component Lifecycle</li>
+                        <li>Error Boundaries</li>
+                        <li>Portals</li>
+                    </ul>
+                </div>
+
+                <div class="topic">
+                    <h3>Server-Side Rendering</h3>
+                    <ul>
+                        <li>Next.js Framework</li>
+                        <li>Static Site Generation</li>
+                        <li>Server-Side Rendering (SSR)</li>
+                        <li>Incremental Static Regeneration</li>
+                        <li>SEO Optimization</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+         <div class="quiz-section">
+            <h2 style="margin-bottom: 20px; color: #4ecdc4;">Ready to Test Your Knowledge?</h2>
+            <p style="margin-bottom: 30px; font-size: 1.2rem; color: #b0b0b0;">
+                Challenge yourself with our comprehensive web development quiz covering all the topics above!
+            </p>
+<a href="/react-quiz.html">
+  <button class="quiz-btn">Take Quiz</button>
+</a>
+
+        </div>
+    </div>
+
+    <script>
+        function startQuiz() {
+            alert('⚛️ React Quiz coming soon! This will test your knowledge across all React concepts from basics to advanced patterns.');
+        }
+
+        // Smooth scrolling animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const modules = document.querySelectorAll('.module');
+            
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            modules.forEach(module => {
+                module.style.opacity = '0';
+                module.style.transform = 'translateY(30px)';
+                module.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(module);
+            });
+
+            // Add interactive code examples
+            const codeExamples = document.querySelectorAll('.code-example');
+            codeExamples.forEach(code => {
+                code.addEventListener('click', function() {
+                    navigator.clipboard.writeText(this.textContent);
+                    this.style.background = 'rgba(97, 218, 251, 0.1)';
+                    setTimeout(() => {
+                        this.style.background = '#0d1117';
+                    }, 1000);
+                });
+            });
+        });
+    </script>
+</body>
+</html><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete React.js Course</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #e1e9fc;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 0;
+            background: rgba(97, 218, 251, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(97, 218, 251, 0.2);
+        }
+
+       .header h1 {
+    font-size: 3.5rem;
+    background: linear-gradient(45deg, #61dafb, #21d4fd, #b721ff);
+    background-clip: text;                /* Standard for modern browsers */
+    -webkit-background-clip: text;        /* For Chrome, Safari */
+    -webkit-text-fill-color: transparent; /* Required for text gradient to show */
+    margin-bottom: 10px;
+    animation: reactGlow 2s ease-in-out infinite alternate;
+}
+
+
+        @keyframes reactGlow {
+            from { filter: drop-shadow(0 0 5px rgba(97, 218, 251, 0.3)); }
+            to { filter: drop-shadow(0 0 20px rgba(97, 218, 251, 0.6)); }
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            color: #b3d9ff;
+            margin-top: 15px;
+        }
+
+        .course-content {
+            display: grid;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .module {
+            background: rgba(97, 218, 251, 0.08);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(97, 218, 251, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .module:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(97, 218, 251, 0.2);
+            border-color: rgba(97, 218, 251, 0.3);
+            background: rgba(97, 218, 251, 0.12);
+        }
+
+        .module h2 {
+            color: #61dafb;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .module-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #61dafb, #21d4fd);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            animation: spin 10s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .topic {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(97, 218, 251, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid #61dafb;
+            transition: all 0.3s ease;
+        }
+
+        .topic:hover {
+            background: rgba(97, 218, 251, 0.1);
+            transform: translateX(10px);
+        }
+
+        .topic h3 {
+            color: #21d4fd;
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+        }
+
+        .topic ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .topic li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #b3d9ff;
+            transition: color 0.3s ease;
+        }
+
+        .topic li:before {
+            content: "⚛️";
+            position: absolute;
+            left: 0;
+            font-size: 0.9rem;
+        }
+
+        .topic li:hover {
+            color: #ffffff;
+        }
+
+        .code-example {
+            background: #0d1117;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 1px solid #30363d;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-example:before {
+            content: "JSX";
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 0.7rem;
+            color: #61dafb;
+            opacity: 0.7;
+        }
+
+        .code-example code {
+            color: #e1e9fc;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .jsx-tag {
+            color: #61dafb;
+        }
+
+        .jsx-prop {
+            color: #79c0ff;
+        }
+
+        .jsx-string {
+            color: #a5d6ff;
+        }
+
+        .jsx-keyword {
+            color: #ff7b72;
+            font-weight: bold;
+        }
+
+        .jsx-comment {
+            color: #8b949e;
+            font-style: italic;
+        }
+
+        .quiz-section {
+            text-align: center;
+            margin-top: 50px;
+            padding: 40px;
+            background: rgba(97, 218, 251, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(97, 218, 251, 0.1);
+        }
+
+        .quiz-btn {
+            background: linear-gradient(45deg, #61dafb, #21d4fd);
+            color: #0a0a0a;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 25px rgba(97, 218, 251, 0.3);
+        }
+
+        .quiz-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(97, 218, 251, 0.5);
+            filter: brightness(1.1);
+        }
+
+        .quiz-btn:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: linear-gradient(90deg, #61dafb, #21d4fd, #b721ff);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            animation: loading 3s ease-in-out infinite;
+        }
+
+        @keyframes loading {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+
+        .floating-shapes {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(97, 218, 251, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .module {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar"></div>
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    
